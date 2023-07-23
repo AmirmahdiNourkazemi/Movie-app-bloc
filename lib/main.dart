@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/screens/main_screen.dart';
 
-void main() {
+import 'di/di.dart';
+
+void main() async {
+  await getItInit();
   runApp(const Application());
 }
 

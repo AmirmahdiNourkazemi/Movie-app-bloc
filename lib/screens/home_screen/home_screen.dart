@@ -1,5 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/bloc/home/home_bloc.dart';
+import 'package:movie_app/bloc/home/home_event.dart';
+import 'package:movie_app/bloc/home/home_state.dart';
+import 'package:movie_app/data/model/Anime.dart';
+import '../../data/model/Data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,6 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    BlocProvider.of<HomeBloc>(context).add(HomeInitEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,8 +33,27 @@ class _HomeScreenState extends State<HomeScreen> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: CustomScrollView(
-            slivers: [GetTopAnimationForBanner()],
+          body: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              return CustomScrollView(
+                slivers: [
+                  if (state is HomeLoadingState) ...[
+                    const SliverToBoxAdapter(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ] else ...{
+                    if (state is ResponseSuccessState) ...{
+                      state.AnimeList.fold(
+                          (l) => SliverToBoxAdapter(
+                                child: Text("sth went wrong"),
+                              ),
+                          (animeList) =>
+                              GetTopAnimationForBanner(animeList.data!))
+                    }
+                  }
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -32,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class GetTopAnimationForBanner extends StatelessWidget {
-  const GetTopAnimationForBanner({
+  List<Data> _listData;
+  GetTopAnimationForBanner(
+    this._listData, {
     super.key,
   });
 
@@ -58,9 +90,8 @@ class GetTopAnimationForBanner extends StatelessWidget {
             scrollDirection: Axis.horizontal,
           ),
           itemCount: 15,
-          itemBuilder:
-              (BuildContext context, int itemIndex, int pageViewIndex) =>
-                  Container(
+          itemBuilder: (BuildContext context, int index, int pageViewIndex) =>
+              Container(
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(
@@ -69,6 +100,7 @@ class GetTopAnimationForBanner extends StatelessWidget {
             ),
             height: 211,
             width: 131,
+            child: Text(_listData[index].titleEnglish!),
           ),
         ),
       ),
