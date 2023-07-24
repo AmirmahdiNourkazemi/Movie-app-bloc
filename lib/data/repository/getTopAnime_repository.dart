@@ -7,12 +7,24 @@ import '../../utils/api_exeption.dart';
 import '../model/Data.dart';
 
 abstract class IgetTopAnimeRepository {
+  Future<Either<String, Anime>> getTopAnimeBanner();
   Future<Either<String, Anime>> getTopAnime();
 }
 
 class GetTopAnimeRemote extends IgetTopAnimeRepository {
   @override
   final IgetTopAnimeDatasource _animeDatasource = locator.get();
+
+  Future<Either<String, Anime>> getTopAnimeBanner() async {
+    try {
+      var response = await _animeDatasource.getTopAnimeBanner();
+      return right(response);
+    } on ApiExeption catch (e) {
+      return left(e.message ?? 'خطا محتوای متنی ندارد');
+    }
+  }
+
+  @override
   Future<Either<String, Anime>> getTopAnime() async {
     try {
       var response = await _animeDatasource.getTopAnime();

@@ -11,7 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeInitEvent>(
       (event, emit) async {
         emit(HomeLoadingState());
-        var getTopAnime = await _animeRepository.getTopAnime();
+        var getTopAnime = await _animeRepository.getTopAnimeBanner();
         emit(ResponseSuccessState(getTopAnime));
       },
     );

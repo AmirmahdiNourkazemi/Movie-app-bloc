@@ -6,13 +6,14 @@ import '../../utils/api_exeption.dart';
 import '../model/Data.dart';
 
 abstract class IgetTopAnimeDatasource {
+  Future<Anime> getTopAnimeBanner();
   Future<Anime> getTopAnime();
 }
 
 class GetTopAnimeDatasource extends IgetTopAnimeDatasource {
   final Dio _dio = locator.get();
 
-  Future<Anime> getTopAnime() async {
+  Future<Anime> getTopAnimeBanner() async {
     final response = await _dio.get('top/anime');
     try {
       return Anime.fromJson(response.data);
@@ -21,18 +22,18 @@ class GetTopAnimeDatasource extends IgetTopAnimeDatasource {
     } catch (ex) {
       throw ApiExeption('unknown error happend', 0);
     }
-    // if (response.statusCode == 200) {
-    //   List<Data> _data = [];
-    //   if (response.data['data'] != null) {
-    //     response.data['data'].forEach((v) {
-    //       _data?.add(Data.fromJson(v));
-    //     });
-    //   }
-    //   //print(_data);
+  }
 
-    // } else {
-    //   throw Exception();
-    // }
-    //final List<dynamic> dataeList = response.data;
+  @override
+  Future<Anime> getTopAnime() async {
+    Map<String, String> qparams = {'page': '2'};
+    final response = await _dio.get('top/anime', queryParameters: qparams);
+    try {
+      return Anime.fromJson(response.data);
+    } on DioError catch (ex) {
+      throw ApiExeption(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiExeption('unknown error happend', 0);
+    }
   }
 }

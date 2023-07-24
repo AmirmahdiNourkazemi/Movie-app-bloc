@@ -45,11 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ] else ...{
                     if (state is ResponseSuccessState) ...{
                       state.AnimeList.fold(
-                          (l) => SliverToBoxAdapter(
-                                child: Text("sth went wrong"),
-                              ),
-                          (animeList) =>
-                              GetTopAnimationForBanner(animeList.data!))
+                        (l) => const SliverToBoxAdapter(
+                          child: Text("sth went wrong"),
+                        ),
+                        (animeList) =>
+                            GetTopAnimationForBanner(animeList.data!),
+                      )
                     }
                   }
                 ],
@@ -76,7 +77,7 @@ class GetTopAnimationForBanner extends StatelessWidget {
         alignment: Alignment.center,
         child: CarouselSlider.builder(
           options: CarouselOptions(
-            height: 250,
+            height: 500,
             viewportFraction: 0.45,
             initialPage: 0,
             enableInfiniteScroll: true,
@@ -92,9 +93,27 @@ class GetTopAnimationForBanner extends StatelessWidget {
           ),
           itemCount: 15,
           itemBuilder: (BuildContext context, int index, int pageViewIndex) =>
+              Column(
+            children: [
               CachedImage(
-            imageUrl: _listData[index].images!.jpg!.largeImageUrl,
-            radious: 20,
+                imageUrl: _listData[index].images!.jpg!.largeImageUrl,
+                radious: 20,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: Text(
+                  _listData[index].titleEnglish!,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
