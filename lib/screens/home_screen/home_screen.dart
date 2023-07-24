@@ -41,7 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 slivers: [
                   if (state is HomeLoadingState) ...[
                     const SliverToBoxAdapter(
-                      child: CircularProgressIndicator(),
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        color: Colors.white,
+                      )),
                     ),
                   ] else ...{
                     if (state is ResponseSuccessState) ...{
@@ -61,7 +64,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         (anime) => GetTopAnime(anime.data!),
                       )
-                    }
+                    },
+                    const NowSeasons(),
+                    if (state is ResponseSuccessState) ...{
+                      state.SeasonNow.fold(
+                        (l) => const SliverToBoxAdapter(
+                          child: Text("sth went wrong"),
+                        ),
+                        (anime) => GetTopAnime(anime.data!),
+                      )
+                    },
+                    const SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 20,
+                      ),
+                    )
                   }
                 ],
               );
@@ -85,6 +102,29 @@ class TopAnimeTitle extends StatelessWidget {
         padding: EdgeInsets.only(left: 12),
         child: Text(
           'Top Anime',
+          style: GoogleFonts.alatsi(
+            color: Colors.white,
+            fontSize: 19,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NowSeasons extends StatelessWidget {
+  const NowSeasons({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.only(left: 12, top: 12),
+        child: Text(
+          'Now Seasons',
           style: GoogleFonts.alatsi(
             color: Colors.white,
             fontSize: 19,
@@ -234,7 +274,7 @@ class GetTopAnimationForBanner extends StatelessWidget {
       child: Align(
         child: CarouselSlider.builder(
           options: CarouselOptions(
-            height: 325,
+            height: 300,
             viewportFraction: 0.42,
             initialPage: 0,
             enableInfiniteScroll: true,
@@ -244,7 +284,7 @@ class GetTopAnimationForBanner extends StatelessWidget {
             autoPlayAnimationDuration: const Duration(milliseconds: 800),
             autoPlayCurve: Curves.easeInOutCubic,
             enlargeCenterPage: true,
-            enlargeFactor: 0.20,
+            enlargeFactor: 0.14,
             //onPageChanged: callbackFunction,
             scrollDirection: Axis.horizontal,
           ),
@@ -256,7 +296,7 @@ class GetTopAnimationForBanner extends StatelessWidget {
                 height: 200,
                 child: CachedImage(
                   imageUrl: _listData[index].images!.jpg!.largeImageUrl,
-                  radious: 15,
+                  radious: 5,
                 ),
               ),
               const SizedBox(

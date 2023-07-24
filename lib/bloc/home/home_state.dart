@@ -12,5 +12,6 @@ class HomeLoadingState extends HomeState {}
 class ResponseSuccessState extends HomeState {
   Either<String, Anime> TopAnimeBanner;
   Either<String, Anime> TopAnime;
-  ResponseSuccessState(this.TopAnimeBanner, this.TopAnime);
+  Either<String, Anime> SeasonNow;
+  ResponseSuccessState(this.TopAnimeBanner, this.TopAnime, this.SeasonNow);
 }
