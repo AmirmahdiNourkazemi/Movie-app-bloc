@@ -3,7 +3,6 @@ import 'package:movie_app/bloc/home/home_event.dart';
 import 'package:movie_app/bloc/home/home_state.dart';
 import 'package:movie_app/data/repository/getTopAnime_repository.dart';
 import 'package:movie_app/di/di.dart';
-import 'package:movie_app/screens/home_screen/home_screen.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IgetTopAnimeRepository _animeRepository = locator.get();
@@ -11,8 +10,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeInitEvent>(
       (event, emit) async {
         emit(HomeLoadingState());
-        var getTopAnime = await _animeRepository.getTopAnimeBanner();
-        emit(ResponseSuccessState(getTopAnime));
+        var getTopAnimeBanner = await _animeRepository.getTopAnimeBanner();
+        var getTopAnime = await _animeRepository.getTopAnime();
+        emit(
+          ResponseSuccessState(getTopAnimeBanner, getTopAnime),
+        );
       },
     );
   }

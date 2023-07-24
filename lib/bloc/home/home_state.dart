@@ -10,6 +10,7 @@ class HomeInitState extends HomeState {}
 class HomeLoadingState extends HomeState {}
 
 class ResponseSuccessState extends HomeState {
-  Either<String, Anime> AnimeList;
-  ResponseSuccessState(this.AnimeList);
+  Either<String, Anime> TopAnimeBanner;
+  Either<String, Anime> TopAnime;
+  ResponseSuccessState(this.TopAnimeBanner, this.TopAnime);
 }
