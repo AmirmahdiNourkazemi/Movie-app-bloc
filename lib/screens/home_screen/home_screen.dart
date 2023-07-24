@@ -6,6 +6,7 @@ import 'package:movie_app/bloc/home/home_event.dart';
 import 'package:movie_app/bloc/home/home_state.dart';
 import 'package:movie_app/data/model/Anime.dart';
 import '../../data/model/Data.dart';
+import '../../widgets/cached_image.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -75,8 +76,8 @@ class GetTopAnimationForBanner extends StatelessWidget {
         alignment: Alignment.center,
         child: CarouselSlider.builder(
           options: CarouselOptions(
-            height: 200,
-            viewportFraction: 0.4,
+            height: 250,
+            viewportFraction: 0.45,
             initialPage: 0,
             enableInfiniteScroll: true,
             reverse: false,
@@ -91,16 +92,9 @@ class GetTopAnimationForBanner extends StatelessWidget {
           ),
           itemCount: 15,
           itemBuilder: (BuildContext context, int index, int pageViewIndex) =>
-              Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
-            height: 211,
-            width: 131,
-            child: Text(_listData[index].titleEnglish!),
+              CachedImage(
+            imageUrl: _listData[index].images!.jpg!.largeImageUrl,
+            radious: 20,
           ),
         ),
       ),
