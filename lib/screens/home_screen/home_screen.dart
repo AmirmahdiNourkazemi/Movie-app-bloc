@@ -155,7 +155,7 @@ class _GetTopAnimeState extends State<GetTopAnime> {
           itemCount: widget._listData.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.only(left: 10, top: 20),
+              padding: const EdgeInsets.only(left: 10, top: 20, right: 10),
               child: SizedBox(
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
@@ -275,7 +275,7 @@ class GetTopAnimationForBanner extends StatelessWidget {
         child: CarouselSlider.builder(
           options: CarouselOptions(
             height: 300,
-            viewportFraction: 0.42,
+            viewportFraction: 0.45,
             initialPage: 0,
             enableInfiniteScroll: true,
             reverse: false,
@@ -284,7 +284,7 @@ class GetTopAnimationForBanner extends StatelessWidget {
             autoPlayAnimationDuration: const Duration(milliseconds: 800),
             autoPlayCurve: Curves.easeInOutCubic,
             enlargeCenterPage: true,
-            enlargeFactor: 0.14,
+            enlargeFactor: 0.16,
             //onPageChanged: callbackFunction,
             scrollDirection: Axis.horizontal,
           ),
