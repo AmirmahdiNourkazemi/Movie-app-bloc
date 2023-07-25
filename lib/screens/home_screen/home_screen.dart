@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/bloc/home/home_bloc.dart';
 import 'package:movie_app/bloc/home/home_event.dart';
 import 'package:movie_app/bloc/home/home_state.dart';
-import 'package:movie_app/data/model/Anime.dart';
-import '../../data/model/Data.dart';
+import '../../data/model/Anime/Data.dart';
+
 import '../../widgets/cached_image.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -220,8 +220,9 @@ class _GetTopAnimeState extends State<GetTopAnime> {
                           width: 60,
                           height: 20,
                           decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.white10.withAlpha(80)),
+                            border: Border.all(
+                              color: Colors.white10.withAlpha(80),
+                            ),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(2),
                             ),

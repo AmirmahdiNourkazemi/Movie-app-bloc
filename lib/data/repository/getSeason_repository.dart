@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:movie_app/data/datasource/getSeason_datasource.dart';
-import 'package:movie_app/data/model/Anime.dart';
 import 'package:movie_app/di/di.dart';
-
 import '../../utils/api_exeption.dart';
+import '../model/Anime/Anime.dart';
 
 abstract class IgetSeasonRepository {
   Future<Either<String, Anime>> getSeasonNow();

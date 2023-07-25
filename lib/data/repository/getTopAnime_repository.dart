@@ -1,10 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:movie_app/data/datasource/getTopAnime_datasource.dart';
-import 'package:movie_app/data/model/Anime.dart';
-
 import '../../di/di.dart';
 import '../../utils/api_exeption.dart';
-import '../model/Data.dart';
+import '../model/Anime/Anime.dart';
 
 abstract class IgetTopAnimeRepository {
   Future<Either<String, Anime>> getTopAnimeBanner();
