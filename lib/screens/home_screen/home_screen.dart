@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/bloc/home/home_bloc.dart';
 import 'package:movie_app/bloc/home/home_event.dart';
@@ -29,7 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xff1F2722), Color(0xff131312)],
+          colors: [
+            Color(0xff1F2722),
+            Color(0xff131312),
+          ],
         ),
       ),
       child: SafeArea(
@@ -37,51 +41,65 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.transparent,
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              return CustomScrollView(
-                slivers: [
-                  if (state is HomeLoadingState) ...[
-                    const SliverToBoxAdapter(
-                      child: Center(
-                          child: CircularProgressIndicator(
-                        color: Colors.white,
-                      )),
-                    ),
-                  ] else ...{
-                    if (state is ResponseSuccessState) ...{
-                      state.TopAnimeBanner.fold(
-                        (l) => const SliverToBoxAdapter(
-                          child: Text("sth went wrong"),
+              if (state is HomeLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                );
+              } else {
+                return SingleChildScrollView(
+                  child: AnimationLimiter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: AnimationConfiguration.toStaggeredList(
+                        duration: const Duration(milliseconds: 500),
+                        childAnimationBuilder: (widget) => SlideAnimation(
+                          horizontalOffset: 100.0,
+                          child: ScaleAnimation(
+                            curve: Curves.ease,
+                            child: widget,
+                          ),
                         ),
-                        (animeList) =>
-                            GetTopAnimationForBanner(animeList.data!),
-                      )
-                    },
-                    const TopAnimeTitle(),
-                    if (state is ResponseSuccessState) ...{
-                      state.TopAnime.fold(
-                        (l) => const SliverToBoxAdapter(
-                          child: Text("sth went wrong"),
-                        ),
-                        (anime) => GetTopAnime(anime.data!),
-                      )
-                    },
-                    const NowSeasons(),
-                    if (state is ResponseSuccessState) ...{
-                      state.SeasonNow.fold(
-                        (l) => const SliverToBoxAdapter(
-                          child: Text("sth went wrong"),
-                        ),
-                        (anime) => GetTopAnime(anime.data!),
-                      )
-                    },
-                    const SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 20,
+                        children: [
+                          if (state is HomeLoadingState) ...[
+                            const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ] else ...{
+                            if (state is ResponseSuccessState) ...{
+                              state.TopAnimeBanner.fold(
+                                (l) => const Text("sth went wrong"),
+                                (animeList) =>
+                                    GetTopAnimationForBanner(animeList.data!),
+                              ),
+                            },
+                            const TopAnimeTitle(),
+                            if (state is ResponseSuccessState) ...{
+                              state.TopAnime.fold(
+                                (l) => const Text("sth went wrong"),
+                                (anime) => GetTopAnime(anime.data!),
+                              )
+                            },
+                            const NowSeasons(),
+                            if (state is ResponseSuccessState) ...{
+                              state.SeasonNow.fold(
+                                (l) => const Text("sth went wrong"),
+                                (anime) => GetTopAnime(anime.data!),
+                              )
+                            },
+                            const SizedBox(
+                              height: 20,
+                            )
+                          }
+                        ],
                       ),
-                    )
-                  }
-                ],
-              );
+                    ),
+                  ),
+                );
+              }
             },
           ),
         ),
@@ -97,16 +115,14 @@ class TopAnimeTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: EdgeInsets.only(left: 12),
-        child: Text(
-          'Top Anime',
-          style: GoogleFonts.alatsi(
-            color: Colors.white,
-            fontSize: 19,
-            fontWeight: FontWeight.bold,
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 12),
+      child: Text(
+        'Top Anime',
+        style: GoogleFonts.alatsi(
+          color: Colors.white,
+          fontSize: 19,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -120,16 +136,14 @@ class NowSeasons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: EdgeInsets.only(left: 12, top: 12),
-        child: Text(
-          'Now Seasons',
-          style: GoogleFonts.alatsi(
-            color: Colors.white,
-            fontSize: 19,
-            fontWeight: FontWeight.bold,
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 12, top: 12),
+      child: Text(
+        'Now Seasons',
+        style: GoogleFonts.alatsi(
+          color: Colors.white,
+          fontSize: 19,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -147,29 +161,76 @@ class GetTopAnime extends StatefulWidget {
 class _GetTopAnimeState extends State<GetTopAnime> {
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: SizedBox(
-        height: 200,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: widget._listData.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 10, top: 20, right: 10),
-              child: SizedBox(
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: [
-                    CachedImage(
-                      imageUrl:
-                          widget._listData[index].images!.webp!.largeImageUrl,
-                      radious: 2,
+    return SizedBox(
+      height: 200,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: widget._listData.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 10, top: 20, right: 10),
+            child: SizedBox(
+              child: Stack(
+                alignment: AlignmentDirectional.bottomCenter,
+                children: [
+                  CachedImage(
+                    imageUrl:
+                        widget._listData[index].images!.webp!.largeImageUrl,
+                    radious: 2,
+                  ),
+                  Positioned(
+                    top: 4,
+                    left: 4,
+                    child: Container(
+                      width: 40,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.white10.withAlpha(80),
+                        ),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(2),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(100),
+                            blurRadius: 10.0,
+                            spreadRadius: 0.0,
+                          ),
+                        ],
+                        color: Colors.white.withOpacity(0.2),
+                      ),
+                      child: Center(
+                        child: Text(
+                          widget._listData[index].score.toString(),
+                          style: GoogleFonts.alatsi(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (widget._listData[index].genres!.isNotEmpty) ...{
+                    Positioned(
+                      child: Container(
+                        width: 100,
+                        height: 2,
+                        decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              offset: Offset(5.0, 5.0),
+                              blurRadius: 30.0,
+                              spreadRadius: 15.0,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     Positioned(
-                      top: 4,
-                      left: 4,
                       child: Container(
-                        width: 40,
+                        width: 60,
                         height: 20,
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -189,7 +250,10 @@ class _GetTopAnimeState extends State<GetTopAnime> {
                         ),
                         child: Center(
                           child: Text(
-                            widget._listData[index].score.toString(),
+                            (widget._listData[index].genres!.isNotEmpty)
+                                ? widget._listData[index].genres![0].name!
+                                : "",
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.alatsi(
                               color: Colors.white,
                               fontSize: 15,
@@ -198,71 +262,18 @@ class _GetTopAnimeState extends State<GetTopAnime> {
                         ),
                       ),
                     ),
-                    if (widget._listData[index].genres!.isNotEmpty) ...{
-                      Positioned(
-                        child: Container(
-                          width: 100,
-                          height: 2,
-                          decoration: const BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black,
-                                offset: Offset(5.0, 5.0),
-                                blurRadius: 30.0,
-                                spreadRadius: 15.0,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        child: Container(
-                          width: 60,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.white10.withAlpha(80),
-                            ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(2),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withAlpha(100),
-                                blurRadius: 10.0,
-                                spreadRadius: 0.0,
-                              ),
-                            ],
-                            color: Colors.white.withOpacity(0.2),
-                          ),
-                          child: Center(
-                            child: Text(
-                              (widget._listData[index].genres!.isNotEmpty)
-                                  ? widget._listData[index].genres![0].name!
-                                  : "",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.alatsi(
-                                color: Colors.white,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    }
-                  ],
-                ),
+                  }
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 }
 
-// ignore: must_be_immutable
-class GetTopAnimationForBanner extends StatelessWidget {
+class GetTopAnimationForBanner extends StatefulWidget {
   final List<Data> _listData;
   const GetTopAnimationForBanner(
     this._listData, {
@@ -270,72 +281,76 @@ class GetTopAnimationForBanner extends StatelessWidget {
   });
 
   @override
+  State<GetTopAnimationForBanner> createState() =>
+      _GetTopAnimationForBannerState();
+}
+
+class _GetTopAnimationForBannerState extends State<GetTopAnimationForBanner> {
+  @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Align(
-        child: CarouselSlider.builder(
-          options: CarouselOptions(
-            height: 300,
-            viewportFraction: 0.45,
-            initialPage: 0,
-            enableInfiniteScroll: true,
-            reverse: false,
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 3),
-            autoPlayAnimationDuration: const Duration(milliseconds: 800),
-            autoPlayCurve: Curves.easeInOutCubic,
-            enlargeCenterPage: true,
-            enlargeFactor: 0.16,
-            //onPageChanged: callbackFunction,
-            scrollDirection: Axis.horizontal,
-          ),
-          itemCount: _listData.length,
-          itemBuilder: (BuildContext context, int index, int pageViewIndex) =>
-              Column(
-            children: [
-              SizedBox(
-                height: 200,
-                child: CachedImage(
-                  imageUrl: _listData[index].images!.jpg!.largeImageUrl,
-                  radious: 5,
-                ),
+    return Align(
+      child: CarouselSlider.builder(
+        options: CarouselOptions(
+          height: 300,
+          viewportFraction: 0.45,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          autoPlayCurve: Curves.easeInOutCubic,
+          enlargeCenterPage: true,
+          enlargeFactor: 0.16,
+          //onPageChanged: callbackFunction,
+          scrollDirection: Axis.horizontal,
+        ),
+        itemCount: widget._listData.length,
+        itemBuilder: (BuildContext context, int index, int pageViewIndex) =>
+            Column(
+          children: [
+            SizedBox(
+              height: 200,
+              child: CachedImage(
+                imageUrl: widget._listData[index].images!.jpg!.largeImageUrl,
+                radious: 5,
               ),
-              const SizedBox(
-                height: 15,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    widget._listData[index].titleEnglish!,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.alatsi(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    (widget._listData[index].genres![0].name!.isNotEmpty)
+                        ? widget._listData[index].genres![0].name!
+                        : "",
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.alatsi(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
               ),
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      _listData[index].titleEnglish!,
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.alatsi(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      (_listData[index].genres![0].name!.isNotEmpty)
-                          ? _listData[index].genres![0].name!
-                          : "",
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.alatsi(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
