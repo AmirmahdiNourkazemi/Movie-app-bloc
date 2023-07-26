@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/home/home_bloc.dart';
 import 'package:movie_app/screens/home_screen/home_screen.dart';
+import 'package:movie_app/screens/search_screen/search_screen.dart';
+import 'package:movie_app/screens/watch_list/watch_list_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -34,17 +36,20 @@ class _MainScreenState extends State<MainScreen> {
           items: [
             FlashyTabBarItem(
               activeColor: Colors.white,
-              icon: Icon(Icons.home),
+              icon: Icon(
+                Icons.home,
+                size: 30,
+              ),
               title: Text('Home'),
             ),
             FlashyTabBarItem(
               activeColor: Colors.white,
-              icon: Icon(Icons.search),
+              icon: Icon(Icons.search, size: 30),
               title: Text('Search'),
             ),
             FlashyTabBarItem(
               activeColor: Colors.white,
-              icon: Icon(Icons.theaters),
+              icon: Icon(Icons.theaters, size: 30),
               title: Text('watch list'),
             ),
           ],
@@ -63,6 +68,8 @@ List<Widget> getScreen() {
     BlocProvider(
       create: (context) => HomeBloc(),
       child: HomeScreen(),
-    )
+    ),
+    SearchScreen(),
+    WatchScreen(),
   ];
 }
