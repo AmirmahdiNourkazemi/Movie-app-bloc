@@ -2,6 +2,7 @@ import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/home/home_bloc.dart';
+import 'package:movie_app/bloc/search/search_bloc.dart';
 import 'package:movie_app/screens/home_screen/home_screen.dart';
 import 'package:movie_app/screens/search_screen/search_screen.dart';
 import 'package:movie_app/screens/watch_list/watch_list_screen.dart';
@@ -69,7 +70,10 @@ List<Widget> getScreen() {
       create: (context) => HomeBloc(),
       child: HomeScreen(),
     ),
-    SearchScreen(),
+    BlocProvider(
+      create: (context) => SearchBloc(),
+      child: SearchScreen(),
+    ),
     WatchScreen(),
   ];
 }
