@@ -23,7 +23,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  int _selectedIndex = 0;
   void initState() {
     BlocProvider.of<HomeBloc>(context).add(HomeInitEvent());
   }
@@ -43,39 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: SafeArea(
         child: Scaffold(
-          bottomNavigationBar: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
-            child: FlashyTabBar(
-              backgroundColor: const Color(0xff131312),
-              height: 55,
-              iconSize: 22,
-              selectedIndex: _selectedIndex,
-              showElevation: true,
-              onItemSelected: (index) => setState(() {
-                _selectedIndex = index;
-              }),
-              items: [
-                FlashyTabBarItem(
-                  activeColor: Colors.white,
-                  icon: Icon(Icons.home),
-                  title: Text('Home'),
-                ),
-                FlashyTabBarItem(
-                  activeColor: Colors.white,
-                  icon: Icon(Icons.search),
-                  title: Text('Search'),
-                ),
-                FlashyTabBarItem(
-                  activeColor: Colors.white,
-                  icon: Icon(Icons.theaters),
-                  title: Text('watch list'),
-                ),
-              ],
-            ),
-          ),
           backgroundColor: Colors.transparent,
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
