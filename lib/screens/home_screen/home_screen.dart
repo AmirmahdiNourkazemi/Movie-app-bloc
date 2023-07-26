@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  int _selectedIndex = 0;
   void initState() {
     BlocProvider.of<HomeBloc>(context).add(HomeInitEvent());
   }
@@ -43,39 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: SafeArea(
         child: Scaffold(
-          bottomNavigationBar: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
-            child: FlashyTabBar(
-              backgroundColor: const Color(0xff131312),
-              height: 55,
-              iconSize: 22,
-              selectedIndex: _selectedIndex,
-              showElevation: true,
-              onItemSelected: (index) => setState(() {
-                _selectedIndex = index;
-              }),
-              items: [
-                FlashyTabBarItem(
-                  activeColor: Colors.white,
-                  icon: Icon(Icons.home),
-                  title: Text('Home'),
-                ),
-                FlashyTabBarItem(
-                  activeColor: Colors.white,
-                  icon: Icon(Icons.search),
-                  title: Text('Search'),
-                ),
-                FlashyTabBarItem(
-                  activeColor: Colors.white,
-                  icon: Icon(Icons.theaters),
-                  title: Text('watch list'),
-                ),
-              ],
-            ),
-          ),
           backgroundColor: Colors.transparent,
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
@@ -100,6 +67,75 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         children: [
+                          // DefaultTabController(
+                          //   length: 6,
+                          //   child: SizedBox(
+                          //     height: 45,
+                          //     child: Column(
+                          //       children: <Widget>[
+                          //         ButtonsTabBar(
+                          //           radius: 12,
+                          //           contentPadding:
+                          //               EdgeInsets.symmetric(horizontal: 12),
+                          //           borderWidth: 2,
+                          //           borderColor: Colors.transparent,
+                          //           center: true,
+                          //           decoration: BoxDecoration(
+                          //             gradient: LinearGradient(
+                          //               colors: <Color>[
+                          //                 Color(0xFF0D47A1),
+                          //                 Color(0xFF1976D2),
+                          //                 Color(0xFF42A5F5),
+                          //               ],
+                          //             ),
+                          //           ),
+                          //           unselectedLabelStyle:
+                          //               TextStyle(color: Colors.black),
+                          //           labelStyle: TextStyle(color: Colors.white),
+                          //           height: 45,
+                          //           tabs: [
+                          //             Tab(
+                          //               //icon: Icon(Icons.home),
+                          //               text: "car",
+                          //             ),
+                          //             Tab(
+                          //               icon: Icon(Icons.directions_transit),
+                          //               text: "transit",
+                          //             ),
+                          //             Tab(icon: Icon(Icons.directions_bike)),
+                          //             Tab(icon: Icon(Icons.directions_car)),
+                          //             Tab(icon: Icon(Icons.directions_transit)),
+                          //             Tab(icon: Icon(Icons.directions_bike)),
+                          //           ],
+                          //         ),
+                          //         Expanded(
+                          //           child: TabBarView(
+                          //             children: <Widget>[
+                          //               Center(
+                          //                 child: Icon(Icons.directions_car),
+                          //               ),
+                          //               Center(
+                          //                 child: Icon(Icons.directions_transit),
+                          //               ),
+                          //               Center(
+                          //                 child: Icon(Icons.directions_bike),
+                          //               ),
+                          //               Center(
+                          //                 child: Icon(Icons.directions_car),
+                          //               ),
+                          //               Center(
+                          //                 child: Icon(Icons.directions_transit),
+                          //               ),
+                          //               Center(
+                          //                 child: Icon(Icons.directions_bike),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                           if (state is HomeLoadingState) ...[
                             const Center(
                               child: CircularProgressIndicator(
