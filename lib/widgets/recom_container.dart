@@ -32,39 +32,6 @@ class _RecomContainerState extends State<RecomContainer> {
                         ._listData[index].entry![1].images!.jpg!.largeImageUrl,
                     radious: 2,
                   ),
-                  Positioned(
-                    top: 4,
-                    left: 4,
-                    child: Container(
-                      width: 40,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white10.withAlpha(80),
-                        ),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(2),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withAlpha(100),
-                            blurRadius: 10.0,
-                            spreadRadius: 0.0,
-                          ),
-                        ],
-                        color: Colors.white.withOpacity(0.2),
-                      ),
-                      child: Center(
-                        child: Text(
-                          widget._listData[index].entry![1].title!,
-                          style: GoogleFonts.alatsi(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                   if (widget._listData[index].entry![1].title!.isNotEmpty) ...{
                     Positioned(
                       child: Container(
@@ -84,7 +51,7 @@ class _RecomContainerState extends State<RecomContainer> {
                     ),
                     Positioned(
                       child: Container(
-                        width: 60,
+                        width: 120,
                         height: 20,
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -96,24 +63,24 @@ class _RecomContainerState extends State<RecomContainer> {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withAlpha(100),
-                              blurRadius: 10.0,
-                              spreadRadius: 0.0,
+                              blurRadius: 20.0,
+                              spreadRadius: 20.0,
                             ),
                           ],
                           color: Colors.white.withOpacity(0.2),
                         ),
-                        // child: Center(
-                        //   child: Text(
-                        //     (widget._listData[index].genres!.isNotEmpty)
-                        //         ? widget._listData[index].genres![0].name!
-                        //         : "",
-                        //     textAlign: TextAlign.center,
-                        //     style: GoogleFonts.alatsi(
-                        //       color: Colors.white,
-                        //       fontSize: 15,
-                        //     ),
-                        //   ),
-                        // ),
+                        child: Center(
+                          child: Text(
+                            (widget._listData[index].entry!.isNotEmpty)
+                                ? widget._listData[index].entry![1].title!
+                                : "",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.alatsi(
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   }

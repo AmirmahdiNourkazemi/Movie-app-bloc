@@ -1,10 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_app/bloc/home/home_state.dart';
 import 'package:movie_app/bloc/search/search_event.dart';
 import 'package:movie_app/bloc/search/search_state.dart';
 import 'package:movie_app/data/model/recommendation/Recommendation.dart';
 import 'package:movie_app/widgets/recom_container.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import '../../bloc/home/home_bloc.dart';
+import '../../bloc/home/home_event.dart';
 import '../../bloc/search/search_bloc.dart';
 import '../../widgets/anime_container.dart';
 
@@ -16,12 +22,25 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final videoUrl = 'https://www.youtube.com/watch?v=--IcmZkvL0Q';
   late YoutubePlayerController _controller;
+  Random random = Random();
+
   @override
+  var videoUrl;
+  List url = [
+    'https://www.youtube.com/watch?v=--IcmZkvL0Q',
+    'https://www.youtube.com/watch?v=27OZc-ku6is',
+    'https://www.youtube.com/watch?v=e8YBesRKq_U'
+  ];
+
   void initState() {
     BlocProvider.of<SearchBloc>(context).add(SearchInitEvent());
+    BlocProvider.of<HomeBloc>(context).add(HomeInitEvent());
+    int randomIndex = random.nextInt(url.length);
+    videoUrl = url[randomIndex];
     final videoID = YoutubePlayer.convertUrlToId(videoUrl);
+
+    //final videoID = YoutubePlayer.convertUrlToId(videoUrl);
     _controller = YoutubePlayerController(
       initialVideoId: videoID!,
       flags: const YoutubePlayerFlags(autoPlay: true),
@@ -52,20 +71,33 @@ class _SearchScreenState extends State<SearchScreen> {
               );
             } else {
               return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SearchBox(searchController: _searchController),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(10.0),
-                  //   child: ClipRRect(
-                  //     borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  //     child: YoutubePlayer(
-                  //       controller: _controller,
-                  //       showVideoProgressIndicator: true,
-                  //     ),
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      child: YoutubePlayer(
+                        controller: _controller,
+                        showVideoProgressIndicator: true,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Text(
+                      'Recommendation',
+                      style: GoogleFonts.alatsi(
+                        color: Colors.white,
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                   if (state is SearchSuccessResponse) ...{
-                    state.getRecom.fold((l) => Text('data'),
+                    state.getRecom.fold((l) => Text('sth went wrong'),
                         (recomm) => RecomContainer(recomm.data!))
                   }
                 ],
@@ -89,7 +121,7 @@ class SearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Container(
         // Add padding around the search bar
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

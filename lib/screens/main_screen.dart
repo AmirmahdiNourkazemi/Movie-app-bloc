@@ -70,8 +70,17 @@ List<Widget> getScreen() {
       create: (context) => HomeBloc(),
       child: HomeScreen(),
     ),
-    BlocProvider(
-      create: (context) => SearchBloc(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SearchBloc(),
+          child: SearchScreen(),
+        ),
+        BlocProvider(
+          create: (context) => HomeBloc(),
+          child: SearchScreen(),
+        )
+      ],
       child: SearchScreen(),
     ),
     WatchScreen(),
