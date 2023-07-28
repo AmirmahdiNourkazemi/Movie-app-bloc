@@ -7,6 +7,8 @@ import 'package:movie_app/screens/home_screen/home_screen.dart';
 import 'package:movie_app/screens/search_screen/search_screen.dart';
 import 'package:movie_app/screens/watch_list/watch_list_screen.dart';
 
+import 'magazine_screen/magazine_screen.dart';
+
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -80,5 +82,6 @@ List<Widget> getScreen() {
       child: SearchScreen(),
     ),
     const WatchScreen(),
+    const MagazineScreen()
   ];
 }
