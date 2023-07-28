@@ -19,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff131312).withOpacity(0.7),
+      backgroundColor: const Color(0xff131312).withOpacity(0.7),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
@@ -37,21 +37,26 @@ class _MainScreenState extends State<MainScreen> {
           items: [
             FlashyTabBarItem(
               activeColor: Colors.white,
-              icon: Icon(
+              icon: const Icon(
                 Icons.home,
                 size: 30,
               ),
-              title: Text('Home'),
+              title: const Text('Home'),
             ),
             FlashyTabBarItem(
               activeColor: Colors.white,
-              icon: Icon(Icons.search, size: 30),
-              title: Text('Search'),
+              icon: const Icon(Icons.search, size: 30),
+              title: const Text('Search'),
             ),
             FlashyTabBarItem(
               activeColor: Colors.white,
-              icon: Icon(Icons.theaters, size: 30),
-              title: Text('watch list'),
+              icon: const Icon(Icons.theaters, size: 30),
+              title: const Text('watch list'),
+            ),
+            FlashyTabBarItem(
+              activeColor: Colors.white,
+              icon: const Icon(Icons.menu_book_rounded, size: 30),
+              title: const Text('Magazine'),
             ),
           ],
         ),
@@ -68,12 +73,12 @@ List<Widget> getScreen() {
   return <Widget>[
     BlocProvider(
       create: (context) => HomeBloc(),
-      child: HomeScreen(),
+      child: const HomeScreen(),
     ),
     BlocProvider(
       create: (context) => SearchBloc(),
       child: SearchScreen(),
     ),
-    WatchScreen(),
+    const WatchScreen(),
   ];
 }
