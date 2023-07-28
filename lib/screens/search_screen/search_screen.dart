@@ -35,7 +35,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void initState() {
     BlocProvider.of<SearchBloc>(context).add(SearchInitEvent());
-    BlocProvider.of<HomeBloc>(context).add(HomeInitEvent());
     int randomIndex = random.nextInt(url.length);
     videoUrl = url[randomIndex];
     final videoID = YoutubePlayer.convertUrlToId(videoUrl);

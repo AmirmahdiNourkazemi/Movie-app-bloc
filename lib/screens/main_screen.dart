@@ -19,11 +19,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color(0xff131312).withOpacity(0.7),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
         child: FlashyTabBar(
           backgroundColor: const Color(0xff131312),
@@ -70,17 +70,8 @@ List<Widget> getScreen() {
       create: (context) => HomeBloc(),
       child: HomeScreen(),
     ),
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => SearchBloc(),
-          child: SearchScreen(),
-        ),
-        BlocProvider(
-          create: (context) => HomeBloc(),
-          child: SearchScreen(),
-        )
-      ],
+    BlocProvider(
+      create: (context) => SearchBloc(),
       child: SearchScreen(),
     ),
     WatchScreen(),
