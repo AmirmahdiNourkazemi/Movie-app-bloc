@@ -6,6 +6,7 @@ import 'package:movie_app/data/datasource/getTopCharacter_datasource.dart';
 import 'package:movie_app/data/repository/getRecommendation_repository.dart';
 import 'package:movie_app/data/repository/getSeason_repository.dart';
 import 'package:movie_app/data/repository/getTopAnime_repository.dart';
+import 'package:movie_app/data/repository/getTopCharacter_repository.dart';
 
 import '../data/datasource/getTopAnime_datasource.dart';
 
@@ -30,4 +31,5 @@ Future<void> getItInit() async {
   locator.registerFactory<IgetTopAnimeRepository>(() => GetTopAnimeRemote());
   locator.registerFactory<IgetSeasonRepository>(() => GetSeasonRemote());
   locator.registerFactory<IgetRecomRepository>(() => GetRecomRemote());
+  locator.registerFactory<IgetCharacterRepository>(() => GetCharacterRemote());
 }

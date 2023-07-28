@@ -14,6 +14,7 @@ import '../../data/model/Anime/Data.dart';
 
 import '../../widgets/anime_container.dart';
 import '../../widgets/cached_image.dart';
+import '../../widgets/character_container_builder.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -88,7 +89,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 (anime) => GetTopAnime(anime.data!),
                               )
                             },
-                            const NowSeasons(),
+                            const TopCharacters(),
+                            if (state is ResponseSuccessState) ...{
+                              state.TopCharacters.fold(
+                                (l) => const Text("sth went wrong"),
+                                (anime) =>
+                                    CharacterContainerBuilder(anime.data!),
+                              )
+                            },
+                            const NowSeasonsTitle(),
                             if (state is ResponseSuccessState) ...{
                               state.SeasonNow.fold(
                                 (l) => const Text("sth went wrong"),
@@ -134,8 +143,8 @@ class TopAnimeTitle extends StatelessWidget {
   }
 }
 
-class NowSeasons extends StatelessWidget {
-  const NowSeasons({
+class NowSeasonsTitle extends StatelessWidget {
+  const NowSeasonsTitle({
     super.key,
   });
 
@@ -145,6 +154,27 @@ class NowSeasons extends StatelessWidget {
       padding: const EdgeInsets.only(left: 12, top: 12),
       child: Text(
         'Now Seasons',
+        style: GoogleFonts.alatsi(
+          color: Colors.white,
+          fontSize: 19,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class TopCharacters extends StatelessWidget {
+  const TopCharacters({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12, top: 12),
+      child: Text(
+        'Top Characters',
         style: GoogleFonts.alatsi(
           color: Colors.white,
           fontSize: 19,
