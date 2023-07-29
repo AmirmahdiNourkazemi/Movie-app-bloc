@@ -75,7 +75,7 @@ class _RecomContainerState extends State<RecomContainer> {
                                 ? widget._listData[index].entry![1].title!
                                 : "",
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.alatsi(
+                            style: GoogleFonts.raleway(
                               color: Colors.white,
                               fontSize: 15,
                             ),

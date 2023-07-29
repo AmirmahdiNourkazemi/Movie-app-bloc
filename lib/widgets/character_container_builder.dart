@@ -74,7 +74,7 @@ class _CharacterContainerBuilderState extends State<CharacterContainerBuilder> {
                                 ? widget._listData[index].name!
                                 : "",
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.alatsi(
+                            style: GoogleFonts.raleway(
                               color: Colors.white,
                               fontSize: 15,
                             ),

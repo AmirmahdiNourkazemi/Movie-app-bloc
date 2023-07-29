@@ -91,7 +91,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       padding: const EdgeInsets.only(left: 12),
                       child: Text(
                         'Recommendation',
-                        style: GoogleFonts.alatsi(
+                        style: GoogleFonts.raleway(
                           color: Colors.white,
                           fontSize: 19,
                           fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       padding: const EdgeInsets.only(left: 12, top: 12),
                       child: Text(
                         'Upcomming seasons',
-                        style: GoogleFonts.alatsi(
+                        style: GoogleFonts.raleway(
                           color: Colors.white,
                           fontSize: 19,
                           fontWeight: FontWeight.bold,

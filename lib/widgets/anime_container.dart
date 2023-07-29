@@ -57,7 +57,7 @@ class _GetTopAnimeState extends State<GetTopAnime> {
                       child: Center(
                         child: Text(
                           widget._listData[index].score.toString(),
-                          style: GoogleFonts.alatsi(
+                          style: GoogleFonts.raleway(
                             color: Colors.white,
                             fontSize: 15,
                           ),
@@ -108,7 +108,7 @@ class _GetTopAnimeState extends State<GetTopAnime> {
                                 ? widget._listData[index].genres![0].name!
                                 : "",
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.alatsi(
+                            style: GoogleFonts.raleway(
                               color: Colors.white,
                               fontSize: 15,
                             ),

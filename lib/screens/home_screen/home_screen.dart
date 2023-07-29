@@ -134,7 +134,7 @@ class TopAnimeTitle extends StatelessWidget {
       padding: const EdgeInsets.only(left: 12),
       child: Text(
         'Top Anime',
-        style: GoogleFonts.alatsi(
+        style: GoogleFonts.raleway(
           color: Colors.white,
           fontSize: 19,
           fontWeight: FontWeight.bold,
@@ -155,7 +155,7 @@ class NowSeasonsTitle extends StatelessWidget {
       padding: const EdgeInsets.only(left: 12, top: 12),
       child: Text(
         'Now Seasons',
-        style: GoogleFonts.alatsi(
+        style: GoogleFonts.raleway(
           color: Colors.white,
           fontSize: 19,
           fontWeight: FontWeight.bold,
@@ -176,7 +176,7 @@ class TopCharacters extends StatelessWidget {
       padding: const EdgeInsets.only(left: 12, top: 12),
       child: Text(
         'Top Characters',
-        style: GoogleFonts.alatsi(
+        style: GoogleFonts.raleway(
           color: Colors.white,
           fontSize: 19,
           fontWeight: FontWeight.bold,
@@ -249,7 +249,7 @@ class _GetTopAnimationForBannerState extends State<GetTopAnimationForBanner> {
                       widget._listData[index].titleEnglish!,
                       maxLines: 1,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.alatsi(
+                      style: GoogleFonts.raleway(
                         color: Colors.white,
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -264,7 +264,7 @@ class _GetTopAnimationForBannerState extends State<GetTopAnimationForBanner> {
                           : "",
                       maxLines: 1,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.alatsi(
+                      style: GoogleFonts.raleway(
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.normal,

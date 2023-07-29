@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/data/model/Anime/Data.dart';
 import 'package:movie_app/widgets/cached_image.dart';
 
@@ -52,10 +53,50 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   ),
                 ),
                 backgroundColor: const Color(0xff1F2722),
-                expandedHeight: 350,
+                expandedHeight: 300,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: CachedImage(
-                    imageUrl: widget.anime.images!.jpg!.largeImageUrl!,
+                  background: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: CachedImage(
+                          imageUrl: widget.anime.images!.jpg!.largeImageUrl,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 25,
+                        child: Container(
+                          width: 130,
+                          height: 40,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color(0xff9496c1),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.play_arrow_outlined,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                "Play",
+                                style: GoogleFonts.raleway(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               )
@@ -73,7 +114,19 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
               ),
             ),
             child: Column(
-              children: [Text('data')],
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    widget.anime.title!,
+                    style: GoogleFonts.raleway(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         ),

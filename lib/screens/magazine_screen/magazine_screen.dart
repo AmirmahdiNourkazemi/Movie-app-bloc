@@ -111,7 +111,7 @@ class MagazineContainer extends StatelessWidget {
             ),
             title: Text(
               magazine.name!,
-              style: GoogleFonts.alatsi(
+              style: GoogleFonts.raleway(
                 color: Colors.black,
                 fontSize: 19,
                 fontWeight: FontWeight.bold,
@@ -119,7 +119,7 @@ class MagazineContainer extends StatelessWidget {
             ),
             subtitle: Text(
               magazine.url!,
-              style: GoogleFonts.alatsi(
+              style: GoogleFonts.raleway(
                 color: Colors.black,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -130,11 +130,12 @@ class MagazineContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextButton(
-                child: const Text(
+                child: Text(
                   'See Magazine',
-                  style: TextStyle(
+                  style: GoogleFonts.raleway(
                     color: Colors.black,
                     fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 onPressed: () {
