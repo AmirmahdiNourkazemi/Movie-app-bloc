@@ -6,6 +6,7 @@ import 'package:movie_app/bloc/magazine/magazine_state.dart';
 import 'package:movie_app/data/model/Magazine/Data.dart';
 
 import '../../data/model/Magazine/Magazine.dart';
+import '../../widgets/web_view_container.dart';
 
 /// Flutter code sample for [Card].
 class MagazineScreen extends StatefulWidget {
@@ -95,12 +96,40 @@ class MagazineContainer extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) {
+                  return WebViewContainer(magazine.url);
+                }),
+              );
+            },
             leading: const Icon(Icons.menu_book_sharp),
             title: Text(
               magazine.name!,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white, fontSize: 18),
             ),
             subtitle: Text(magazine.url!),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextButton(
+                child: const Text(
+                  'See Magazine',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      return WebViewContainer(magazine.url);
+                    }),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),
