@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/bloc/magazine/magazine_bloc.dart';
 import 'package:movie_app/bloc/magazine/magazine_event.dart';
 import 'package:movie_app/bloc/magazine/magazine_state.dart';
@@ -43,7 +44,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
             body: CustomScrollView(
               slivers: [
                 if (state is MagazineLoadingState) ...{
-                  SliverToBoxAdapter(
+                  const SliverToBoxAdapter(
                     child: CircularProgressIndicator(
                       color: Colors.white,
                     ),
@@ -53,7 +54,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                     state.getMagazine.fold(
                       (l) => Text("sth went wrong"),
                       (magazine) => SliverPadding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         sliver: SliverGrid(
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
@@ -65,7 +66,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
                             mainAxisSpacing: 5,
-                            childAspectRatio: 3,
+                            childAspectRatio: 2.6,
                           ),
                         ),
                       ),
@@ -103,12 +104,27 @@ class MagazineContainer extends StatelessWidget {
                 }),
               );
             },
-            leading: const Icon(Icons.menu_book_sharp),
+            leading: const Icon(
+              Icons.menu_book_sharp,
+              color: Colors.black,
+              size: 30,
+            ),
             title: Text(
               magazine.name!,
-              style: const TextStyle(color: Colors.white, fontSize: 18),
+              style: GoogleFonts.alatsi(
+                color: Colors.black,
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            subtitle: Text(magazine.url!),
+            subtitle: Text(
+              magazine.url!,
+              style: GoogleFonts.alatsi(
+                color: Colors.black,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

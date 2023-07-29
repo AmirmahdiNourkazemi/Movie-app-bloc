@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/bloc/home/home_bloc.dart';
 import 'package:movie_app/bloc/home/home_event.dart';
 import 'package:movie_app/bloc/home/home_state.dart';
+import 'package:movie_app/screens/anime_detail_screen.dart';
 import '../../data/model/Anime/Data.dart';
 
 import '../../widgets/anime_container.dart';
@@ -219,50 +220,61 @@ class _GetTopAnimationForBannerState extends State<GetTopAnimationForBanner> {
         ),
         itemCount: widget._listData.length,
         itemBuilder: (BuildContext context, int index, int pageViewIndex) =>
-            Column(
-          children: [
-            SizedBox(
-              height: 200,
-              child: CachedImage(
-                imageUrl: widget._listData[index].images!.jpg!.largeImageUrl,
-                radious: 5,
+            GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return AnimeDetailScreen(widget._listData[index]);
+                },
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Center(
-              child: Column(
-                children: [
-                  Text(
-                    widget._listData[index].titleEnglish!,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.alatsi(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    (widget._listData[index].genres![0].name!.isNotEmpty)
-                        ? widget._listData[index].genres![0].name!
-                        : "",
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.alatsi(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ],
+            );
+          },
+          child: Column(
+            children: [
+              SizedBox(
+                height: 200,
+                child: CachedImage(
+                  imageUrl: widget._listData[index].images!.jpg!.largeImageUrl,
+                  radious: 5,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 15,
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    Text(
+                      widget._listData[index].titleEnglish!,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.alatsi(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      (widget._listData[index].genres![0].name!.isNotEmpty)
+                          ? widget._listData[index].genres![0].name!
+                          : "",
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.alatsi(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

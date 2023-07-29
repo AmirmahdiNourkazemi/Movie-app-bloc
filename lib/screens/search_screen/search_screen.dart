@@ -78,8 +78,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
                         child: YoutubePlayer(
                           controller: _controller,
                           showVideoProgressIndicator: true,
@@ -114,8 +115,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     if (state is SearchSuccessResponse) ...{
                       state.getUpcommingSeasons.fold(
-                          (l) => const Text('sth went wrong'),
-                          (recomm) => GetTopAnime(recomm.data!))
+                        (l) => const Text('sth went wrong'),
+                        (recomm) => GetTopAnime(recomm.data!),
+                      )
                     },
                   ],
                 ),
