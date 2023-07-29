@@ -25,8 +25,8 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: const Color(0xff131312).withOpacity(0.7),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+          topLeft: Radius.circular(0),
+          topRight: Radius.circular(0),
         ),
         child: FlashyTabBar(
           backgroundColor: const Color(0xff131312),

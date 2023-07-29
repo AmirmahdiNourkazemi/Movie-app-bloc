@@ -35,15 +35,15 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void initState() {
     BlocProvider.of<SearchBloc>(context).add(SearchInitEvent());
-    int randomIndex = random.nextInt(url.length);
-    videoUrl = url[randomIndex];
-    final videoID = YoutubePlayer.convertUrlToId(videoUrl);
+    // int randomIndex = random.nextInt(url.length);
+    // videoUrl = url[randomIndex];
+    // final videoID = YoutubePlayer.convertUrlToId(videoUrl);
 
-    //final videoID = YoutubePlayer.convertUrlToId(videoUrl);
-    _controller = YoutubePlayerController(
-      initialVideoId: videoID!,
-      flags: const YoutubePlayerFlags(autoPlay: true),
-    );
+    // //final videoID = YoutubePlayer.convertUrlToId(videoUrl);
+    // _controller = YoutubePlayerController(
+    //   initialVideoId: videoID!,
+    //   flags: const YoutubePlayerFlags(autoPlay: true),
+    // );
   }
 
   @override
@@ -75,18 +75,18 @@ class _SearchScreenState extends State<SearchScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SearchBox(searchController: _searchController),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        child: YoutubePlayer(
-                          controller: _controller,
-                          showVideoProgressIndicator: true,
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(10.0),
+                    //   child: ClipRRect(
+                    //     borderRadius: const BorderRadius.all(
+                    //       Radius.circular(20),
+                    //     ),
+                    //     child: YoutubePlayer(
+                    //       controller: _controller,
+                    //       showVideoProgressIndicator: true,
+                    //     ),
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.only(left: 12),
                       child: Text(
