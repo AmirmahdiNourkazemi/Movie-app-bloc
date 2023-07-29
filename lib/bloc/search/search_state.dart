@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:movie_app/data/model/Anime/Anime.dart';
 import 'package:movie_app/data/model/recommendation/Recommendation.dart';
 
 abstract class SearchState {}
@@ -9,5 +10,6 @@ class SearchInitState extends SearchState {}
 
 class SearchSuccessResponse extends SearchState {
   Either<String, Recommendation> getRecom;
-  SearchSuccessResponse(this.getRecom);
+  Either<String, Anime> getUpcommingSeasons;
+  SearchSuccessResponse(this.getRecom, this.getUpcommingSeasons);
 }

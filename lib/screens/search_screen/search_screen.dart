@@ -65,41 +65,60 @@ class _SearchScreenState extends State<SearchScreen> {
           backgroundColor: Colors.transparent,
           body: BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
             if (state is SearchLoadingState) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SearchBox(searchController: _searchController),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      child: YoutubePlayer(
-                        controller: _controller,
-                        showVideoProgressIndicator: true,
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SearchBox(searchController: _searchController),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        child: YoutubePlayer(
+                          controller: _controller,
+                          showVideoProgressIndicator: true,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12),
-                    child: Text(
-                      'Recommendation',
-                      style: GoogleFonts.alatsi(
-                        color: Colors.white,
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: Text(
+                        'Recommendation',
+                        style: GoogleFonts.alatsi(
+                          color: Colors.white,
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  if (state is SearchSuccessResponse) ...{
-                    state.getRecom.fold((l) => Text('sth went wrong'),
-                        (recomm) => RecomContainer(recomm.data!))
-                  }
-                ],
+                    if (state is SearchSuccessResponse) ...{
+                      state.getRecom.fold((l) => const Text('sth went wrong'),
+                          (recomm) => RecomContainer(recomm.data!))
+                    },
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12, top: 12),
+                      child: Text(
+                        'Upcomming seasons',
+                        style: GoogleFonts.alatsi(
+                          color: Colors.white,
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    if (state is SearchSuccessResponse) ...{
+                      state.getUpcommingSeasons.fold(
+                          (l) => const Text('sth went wrong'),
+                          (recomm) => GetTopAnime(recomm.data!))
+                    },
+                  ],
+                ),
               );
             }
           }),
@@ -122,9 +141,7 @@ class SearchBox extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Container(
-        // Add padding around the search bar
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        // Use a Material design search bar
         child: TextField(
           cursorColor: Colors.white,
           controller: _searchController,
