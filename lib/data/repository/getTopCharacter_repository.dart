@@ -7,6 +7,7 @@ import '../../utils/api_exeption.dart';
 
 abstract class IgetCharacterRepository {
   Future<Either<String, Character>> getTopCharacter();
+  Future<Either<String, Character>> getCharacterById(String mal_id);
 }
 
 class GetCharacterRemote extends IgetCharacterRepository {
@@ -15,6 +16,16 @@ class GetCharacterRemote extends IgetCharacterRepository {
   Future<Either<String, Character>> getTopCharacter() async {
     try {
       var response = await _characterDatasource.getTopCharacter();
+      return right(response);
+    } on ApiExeption catch (e) {
+      return left(e.message ?? 'خطا محتوای متنی ندارد');
+    }
+  }
+
+  @override
+  Future<Either<String, Character>> getCharacterById(String mal_id) async {
+    try {
+      var response = await _characterDatasource.getCharacterById(mal_id);
       return right(response);
     } on ApiExeption catch (e) {
       return left(e.message ?? 'خطا محتوای متنی ندارد');

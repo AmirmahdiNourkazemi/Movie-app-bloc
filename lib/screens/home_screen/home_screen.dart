@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/bloc/home/home_bloc.dart';
 import 'package:movie_app/bloc/home/home_event.dart';
 import 'package:movie_app/bloc/home/home_state.dart';
-import 'package:movie_app/screens/anime_detail_screen.dart';
+import 'package:movie_app/screens/movie_detail_screen/anime_detail_screen.dart';
 import '../../data/model/Anime/Data.dart';
 
 import '../../widgets/anime_container.dart';
