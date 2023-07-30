@@ -140,66 +140,33 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           verticalDirection: VerticalDirection.up,
                           children: [
-                            Card(
-                              child: SizedBox(
-                                width: 80,
-                                height: 25,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "episode:${widget.anime.episodes.toString()}",
-                                        style: GoogleFonts.raleway(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                            Chip(
+                              label: Text(
+                                "episode:${widget.anime.episodes.toString()}",
+                                style: GoogleFonts.raleway(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                            Card(
-                              child: SizedBox(
-                                width: 100,
-                                height: 25,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "${widget.anime.duration}",
-                                        style: GoogleFonts.raleway(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                            Chip(
+                              label: Text(
+                                "${widget.anime.duration}",
+                                style: GoogleFonts.raleway(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                            Card(
-                              child: SizedBox(
-                                width: 100,
-                                height: 25,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "genre: ${widget.anime.genres![0].name}",
-                                        style: GoogleFonts.raleway(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                            Chip(
+                              label: Text(
+                                "genre: ${widget.anime.genres![0].name}",
+                                style: GoogleFonts.raleway(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
@@ -219,47 +186,25 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Card(
-                              child: SizedBox(
-                                // /width: 80,
-                                height: 25,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "members: ${widget.anime.rating}",
-                                        style: GoogleFonts.raleway(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                            Chip(
+                              label: Text(
+                                "members: ${widget.anime.rating}",
+                                style: GoogleFonts.raleway(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
+                            // ignore: unrelated_type_equality_checks
                             if (widget.anime.year != Null) ...{
-                              Card(
-                                child: SizedBox(
-                                  width: 80,
-                                  height: 25,
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "${widget.anime.year}",
-                                          style: GoogleFonts.raleway(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                              Chip(
+                                label: Text(
+                                  "${widget.anime.year}",
+                                  style: GoogleFonts.raleway(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
@@ -272,39 +217,32 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Card(
-                        child: SizedBox(
-                          width: 80,
-                          height: 25,
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
+                  // ignore: unrelated_type_equality_checks
+                  if (widget.anime.broadcast!.timezone != Null &&
+                      // ignore: unrelated_type_equality_checks
+                      widget.anime.broadcast!.day != Null &&
+                      // ignore: unrelated_type_equality_checks
+                      widget.anime.broadcast!.string != Null) ...{
+                    SizedBox(
+                      height: 30,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Chip(
+                                label: Text(
                                   "${widget.anime.broadcast!.timezone}",
                                   style: GoogleFonts.raleway(
                                     color: Colors.black,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Card(
-                        child: SizedBox(
-                          width: 100,
-                          height: 25,
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
+                                ),
+                              ),
+                              Chip(
+                                label: Text(
                                   "${widget.anime.broadcast!.day}",
                                   style: GoogleFonts.raleway(
                                     color: Colors.black,
@@ -312,19 +250,9 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Card(
-                        child: SizedBox(
-                          height: 25,
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
+                              ),
+                              Chip(
+                                label: Text(
                                   "${widget.anime.broadcast!.string}",
                                   style: GoogleFonts.raleway(
                                     color: Colors.black,
@@ -332,13 +260,13 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  )
+                    )
+                  }
                 ],
               ),
             ),
