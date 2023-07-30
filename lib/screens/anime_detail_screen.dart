@@ -141,6 +141,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                           verticalDirection: VerticalDirection.up,
                           children: [
                             Chip(
+                              avatar: const Icon(Icons.movie),
                               label: Text(
                                 "episode:${widget.anime.episodes.toString()}",
                                 style: GoogleFonts.raleway(
@@ -151,6 +152,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                               ),
                             ),
                             Chip(
+                              avatar: const Icon(Icons.timelapse),
                               label: Text(
                                 "${widget.anime.duration}",
                                 style: GoogleFonts.raleway(
@@ -161,6 +163,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                               ),
                             ),
                             Chip(
+                              avatar: const Icon(Icons.local_movies),
                               label: Text(
                                 "genre: ${widget.anime.genres![0].name}",
                                 style: GoogleFonts.raleway(
@@ -187,6 +190,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Chip(
+                              avatar: const Icon(Icons.rate_review),
                               label: Text(
                                 "members: ${widget.anime.rating}",
                                 style: GoogleFonts.raleway(
@@ -197,8 +201,10 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                               ),
                             ),
                             // ignore: unrelated_type_equality_checks
-                            if (widget.anime.year != Null) ...{
+                            if (widget.anime.year == Null) ...{
                               Chip(
+                                avatar: const Icon(
+                                    Icons.production_quantity_limits_rounded),
                                 label: Text(
                                   "${widget.anime.year}",
                                   style: GoogleFonts.raleway(
@@ -217,12 +223,9 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  // ignore: unrelated_type_equality_checks
-                  if (widget.anime.broadcast!.timezone != Null &&
-                      // ignore: unrelated_type_equality_checks
-                      widget.anime.broadcast!.day != Null &&
-                      // ignore: unrelated_type_equality_checks
-                      widget.anime.broadcast!.string != Null) ...{
+                  if (widget.anime.broadcast!.timezone == Null &&
+                      widget.anime.broadcast!.day == Null &&
+                      widget.anime.broadcast!.string == Null) ...{
                     SizedBox(
                       height: 30,
                       child: ListView(
@@ -232,6 +235,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Chip(
+                                avatar: const Icon(Icons.flag),
                                 label: Text(
                                   "${widget.anime.broadcast!.timezone}",
                                   style: GoogleFonts.raleway(
@@ -242,16 +246,8 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                                 ),
                               ),
                               Chip(
-                                label: Text(
-                                  "${widget.anime.broadcast!.day}",
-                                  style: GoogleFonts.raleway(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Chip(
+                                avatar: const Icon(
+                                    Icons.published_with_changes_rounded),
                                 label: Text(
                                   "${widget.anime.broadcast!.string}",
                                   style: GoogleFonts.raleway(
