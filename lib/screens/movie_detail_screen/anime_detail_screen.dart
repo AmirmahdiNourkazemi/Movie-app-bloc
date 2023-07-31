@@ -281,6 +281,23 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                           ),
                         )
                       },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Characters',
+                              style: GoogleFonts.raleway(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       if (state is MovieDetailResponseSuccessState) ...{
                         state.movieDetailById.fold(
                           (l) => const Text("sth went wrong"),

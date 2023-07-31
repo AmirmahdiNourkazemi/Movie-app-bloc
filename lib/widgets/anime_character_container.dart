@@ -24,7 +24,7 @@ class _AnimeCharacterContainerBuilderState
         itemCount: widget._listData.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(right: 5),
+            padding: const EdgeInsets.only(right: 10),
             child: SizedBox(
               child: Stack(
                 alignment: AlignmentDirectional.bottomCenter,
@@ -53,7 +53,7 @@ class _AnimeCharacterContainerBuilderState
                     ),
                     Positioned(
                       child: Container(
-                        width: 120,
+                        width: 110,
                         height: 20,
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -76,9 +76,9 @@ class _AnimeCharacterContainerBuilderState
                             widget._listData[index].character!.name!,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.raleway(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),

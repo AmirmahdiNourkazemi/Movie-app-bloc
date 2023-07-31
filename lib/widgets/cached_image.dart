@@ -24,7 +24,7 @@ class CachedImage extends StatelessWidget {
         },
         placeholder: (context, url) {
           return Container(
-            color: Colors.grey,
+            child: Image.asset('assets/images/no-movie.jpg'),
           );
         },
       ),
