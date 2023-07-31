@@ -8,8 +8,10 @@ import 'package:movie_app/bloc/movie_detail/movie_detail_state.dart';
 import 'package:movie_app/data/model/getTop/Anime/Data.dart';
 import 'package:movie_app/widgets/cached_image.dart';
 
+import '../../data/model/Anime/getAnimeEpisodes/GetAnimeEpisodes.dart';
 import '../../widgets/anime_character_container.dart';
 import '../../widgets/character_container_builder.dart';
+import '../../widgets/text_widget.dart';
 
 class AnimeDetailScreen extends StatefulWidget {
   final Data anime;
@@ -30,6 +32,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int length = 2;
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -297,14 +300,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                                 ),
                               ),
                             ),
-                            (episodes) => Text(
-                              "${episodes.data!.synopsis}",
-                              style: GoogleFonts.raleway(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                            (episodes) => GetSynopsis(episodes),
                           )
                         },
                         Padding(
@@ -341,5 +337,54 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
         ),
       ),
     );
+  }
+}
+
+class GetSynopsis extends StatefulWidget {
+  GetAnimeEpisodes episodes;
+  GetSynopsis(
+    this.episodes, {
+    super.key,
+  });
+  bool isExpanded = false;
+  bool visibility = true;
+  @override
+  State<GetSynopsis> createState() => _GetSynopsisState();
+}
+
+class _GetSynopsisState extends State<GetSynopsis>
+    with TickerProviderStateMixin<GetSynopsis> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: <Widget>[
+      AnimatedSize(
+        // vsync: this,
+        duration: const Duration(milliseconds: 200),
+        child: ConstrainedBox(
+          constraints: widget.isExpanded
+              ? const BoxConstraints()
+              : const BoxConstraints(maxHeight: 20.0),
+          child: Text('${widget.episodes.data!.synopsis}',
+              softWrap: true,
+              overflow: TextOverflow.fade,
+              style: GoogleFonts.raleway(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              )),
+        ),
+      ),
+      widget.isExpanded
+          ? ConstrainedBox(constraints: const BoxConstraints())
+          : TextButton(
+              child: Text('See more',
+                  style: GoogleFonts.raleway(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  )),
+              onPressed: () => setState(() => widget.isExpanded = true),
+            )
+    ]);
   }
 }
