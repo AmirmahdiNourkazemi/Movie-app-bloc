@@ -127,20 +127,20 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                   )
                 ];
               },
-              body: SingleChildScrollView(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        Color(0xff1F2722),
-                        Color(0xff131312),
-                      ],
-                    ),
+              body: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Color(0xff1F2722),
+                      Color(0xff131312),
+                    ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: SingleChildScrollView(
                     child: Column(
                       children: [
                         Text(
@@ -358,20 +358,21 @@ class _GetSynopsisState extends State<GetSynopsis>
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       AnimatedSize(
-        // vsync: this,
         duration: const Duration(milliseconds: 200),
         child: ConstrainedBox(
           constraints: widget.isExpanded
               ? const BoxConstraints()
               : const BoxConstraints(maxHeight: 20.0),
-          child: Text('${widget.episodes.data!.synopsis}',
-              softWrap: true,
-              overflow: TextOverflow.fade,
-              style: GoogleFonts.raleway(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              )),
+          child: Text(
+            '${widget.episodes.data!.synopsis}',
+            softWrap: true,
+            overflow: TextOverflow.fade,
+            style: GoogleFonts.raleway(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
       ),
       widget.isExpanded
