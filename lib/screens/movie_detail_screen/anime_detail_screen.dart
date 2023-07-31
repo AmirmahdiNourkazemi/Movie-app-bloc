@@ -5,6 +5,7 @@ import 'package:movie_app/bloc/home/home_state.dart';
 import 'package:movie_app/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:movie_app/bloc/movie_detail/movie_detail_event.dart';
 import 'package:movie_app/bloc/movie_detail/movie_detail_state.dart';
+import 'package:movie_app/data/model/Anime/AnimeNews/AnimeNews.dart';
 import 'package:movie_app/data/model/getTop/Anime/Data.dart';
 import 'package:movie_app/widgets/cached_image.dart';
 
@@ -326,6 +327,12 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                             (anime) =>
                                 AnimeCharacterContainerBuilder(anime.data!),
                           )
+                        },
+                        if (state is MovieDetailResponseSuccessState) ...{
+                          state.getAnimeNews.fold(
+                            (l) => const Text("sth went wrong"),
+                            (news) => NewsBuilder(news),
+                          )
                         }
                       ],
                     ),
@@ -335,6 +342,65 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class NewsBuilder extends StatelessWidget {
+  AnimeNews news;
+  NewsBuilder(
+    this.news, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: GridView.count(
+        scrollDirection: Axis.horizontal,
+        crossAxisCount: 1, // Number of columns in the grid
+        mainAxisSpacing: 5,
+        childAspectRatio: 0.4,
+        children: List.generate(news.data!.length, (index) {
+          return Card(
+            color: const Color(0xff9496c1),
+            child: ListTile(
+              leading: CachedImage(
+                imageUrl: news.data![index].images!.jpg!.imageUrl,
+                radious: 5,
+              ),
+              minLeadingWidth: 0.6,
+              minVerticalPadding: 16,
+              dense: true,
+              // leading: Icon(
+              //   Icons.comment,
+              //   color: Colors.white,
+              // ),
+              isThreeLine: true,
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(
+                  '${news.data![index].title}',
+                  style: GoogleFonts.raleway(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              subtitle: Text(
+                'author : ${news.data![index].authorUsername}',
+                style: GoogleFonts.raleway(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          );
+        }),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:movie_app/data/model/Anime/AnimeNews/AnimeNews.dart';
 import 'package:movie_app/data/model/Anime/getAnimeCharacterById/GetAnimeCharacterById.dart';
 
 import '../../di/di.dart';
@@ -8,6 +9,7 @@ import '../model/Anime/getAnimeEpisodes/GetAnimeEpisodes.dart';
 abstract class IgetAnimeDetailsDatasource {
   Future<GetAnimeCharacterById> getAnimeCharacterById(int mal_id);
   Future<GetAnimeEpisodes> getAnimeEpisodesById(int mal_id, int episodes);
+  Future<AnimeNews> getAnimeNewsById(int mal_id);
 }
 
 class GetAnimeDetailsDatasource extends IgetAnimeDetailsDatasource {
@@ -31,6 +33,19 @@ class GetAnimeDetailsDatasource extends IgetAnimeDetailsDatasource {
 
     try {
       return GetAnimeEpisodes.fromJson(response.data);
+    } on DioError catch (ex) {
+      throw ApiExeption(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiExeption('unknown error happend', 0);
+    }
+  }
+
+  @override
+  Future<AnimeNews> getAnimeNewsById(int mal_id) async {
+    final response = await _dio.get('anime/$mal_id/news');
+
+    try {
+      return AnimeNews.fromJson(response.data);
     } on DioError catch (ex) {
       throw ApiExeption(ex.response?.data['message'], ex.response?.statusCode);
     } catch (ex) {

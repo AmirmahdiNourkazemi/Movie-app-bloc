@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:movie_app/data/datasource/getAnimeDetailById_datasource.dart';
+import 'package:movie_app/data/model/Anime/AnimeNews/AnimeNews.dart';
 import 'package:movie_app/data/model/Anime/getAnimeCharacterById/GetAnimeCharacterById.dart';
 import '../../di/di.dart';
 import '../../utils/api_exeption.dart';
@@ -12,6 +13,7 @@ abstract class IgetAnimeDetailByIdRepository {
       int mal_id);
   Future<Either<String, GetAnimeEpisodes>> getAnimeEpisodesById(
       int mal_id, int episodes);
+  Future<Either<String, AnimeNews>> getAnimeNewsById(int mal_id);
 }
 
 class GetAnimeDetailByIdRemote extends IgetAnimeDetailByIdRepository {
@@ -35,6 +37,16 @@ class GetAnimeDetailByIdRemote extends IgetAnimeDetailByIdRepository {
     try {
       var response =
           await _animeDetailsDatasource.getAnimeEpisodesById(mal_id, episodes);
+      return right(response);
+    } on ApiExeption catch (e) {
+      return left(e.message ?? 'خطا محتوای متنی ندارد');
+    }
+  }
+
+  @override
+  Future<Either<String, AnimeNews>> getAnimeNewsById(int mal_id) async {
+    try {
+      var response = await _animeDetailsDatasource.getAnimeNewsById(mal_id);
       return right(response);
     } on ApiExeption catch (e) {
       return left(e.message ?? 'خطا محتوای متنی ندارد');

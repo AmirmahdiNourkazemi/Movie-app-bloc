@@ -15,8 +15,10 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
             .getAnimeCharacterById(event.mal_id);
         var getAnimeEpisodesById = await _animeDetailByIdRepository
             .getAnimeEpisodesById(event.mal_id, event.episodes);
+        var getAnimeNewsById =
+            await _animeDetailByIdRepository.getAnimeNewsById(event.mal_id);
         emit(MovieDetailResponseSuccessState(
-            getAnimeCharactesById, getAnimeEpisodesById));
+            getAnimeCharactesById, getAnimeEpisodesById, getAnimeNewsById));
       },
     );
   }
