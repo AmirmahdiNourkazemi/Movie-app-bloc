@@ -23,9 +23,7 @@ class CachedImage extends StatelessWidget {
           );
         },
         placeholder: (context, url) {
-          return Container(
-            child: Image.asset('assets/images/no-movie.jpg'),
-          );
+          return Image.asset('assets/images/no-movie.jpg');
         },
       ),
     );
