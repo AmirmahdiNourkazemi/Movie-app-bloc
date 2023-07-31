@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 
-import '../../di/di.dart';
-import '../../utils/api_exeption.dart';
-import '../model/Anime/Anime.dart';
+import '../../../di/di.dart';
+import '../../../utils/api_exeption.dart';
+import '../../model/getTop/Anime/Anime.dart';
 
 abstract class IgetSeasonsDatasource {
   Future<Anime> getSeasonNow();

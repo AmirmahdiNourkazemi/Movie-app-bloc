@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:movie_app/data/datasource/getRecommendation_datasource.dart';
-import 'package:movie_app/data/model/recommendation/Recommendation.dart';
+import 'package:movie_app/data/model/getTop/recommendation/Recommendation.dart';
 import 'package:movie_app/di/di.dart';
 
 import '../../utils/api_exeption.dart';
+import '../datasource/TopDatasources/getRecommendation_datasource.dart';
 
 abstract class IgetRecomRepository {
   Future<Either<String, Recommendation>> getRecome();

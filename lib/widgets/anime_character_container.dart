@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../data/model/getTop/Character/Data.dart';
+
+import '../data/model/Anime/getAnimeCharacterById/Data.dart';
 import 'cached_image.dart';
 
-class CharacterContainerBuilder extends StatefulWidget {
+class AnimeCharacterContainerBuilder extends StatefulWidget {
   final List<Data> _listData;
-  const CharacterContainerBuilder(this._listData, {super.key});
+  const AnimeCharacterContainerBuilder(this._listData, {super.key});
 
   @override
-  State<CharacterContainerBuilder> createState() =>
-      _CharacterContainerBuilderState();
+  State<AnimeCharacterContainerBuilder> createState() =>
+      _AnimeCharacterContainerBuilderState();
 }
 
-class _CharacterContainerBuilderState extends State<CharacterContainerBuilder> {
+class _AnimeCharacterContainerBuilderState
+    extends State<AnimeCharacterContainerBuilder> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 170,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: widget._listData.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 10, top: 20, right: 10),
+            padding: const EdgeInsets.only(right: 5),
             child: SizedBox(
               child: Stack(
                 alignment: AlignmentDirectional.bottomCenter,
                 children: [
                   CachedImage(
                     imageUrl: widget
-                            ._listData[index].images!.jpg!.imageUrl!.isNotEmpty
-                        ? widget._listData[index].images!.jpg!.imageUrl!
-                        : '',
+                        ._listData[index].character?.images?.jpg?.imageUrl,
                     radious: 2,
                   ),
-                  if (widget._listData[index].name!.isNotEmpty) ...{
+                  if (widget._listData[index].character?.name != null) ...{
                     Positioned(
                       child: Container(
                         width: 100,
@@ -73,9 +73,7 @@ class _CharacterContainerBuilderState extends State<CharacterContainerBuilder> {
                         ),
                         child: Center(
                           child: Text(
-                            (widget._listData[index].name!.isNotEmpty)
-                                ? widget._listData[index].name!
-                                : "",
+                            widget._listData[index].character!.name!,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.raleway(
                               color: Colors.white,

@@ -1,15 +1,15 @@
 import 'package:dartz/dartz.dart';
-import 'package:movie_app/data/datasource/getSeason_datasource.dart';
 import 'package:movie_app/di/di.dart';
 import '../../utils/api_exeption.dart';
-import '../model/Anime/Anime.dart';
+import '../datasource/TopDatasources/getSeason_datasource.dart';
+import '../model/getTop/Anime/Anime.dart';
 
 abstract class IgetSeasonRepository {
   Future<Either<String, Anime>> getSeasonNow();
 }
 
 class GetSeasonRemote extends IgetSeasonRepository {
-  IgetSeasonsDatasource _datasource = locator.get();
+  final IgetSeasonsDatasource _datasource = locator.get();
   @override
   Future<Either<String, Anime>> getSeasonNow() async {
     try {

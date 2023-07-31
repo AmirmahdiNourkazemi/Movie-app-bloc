@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:movie_app/data/model/Character/Character.dart';
+import 'package:movie_app/data/model/getTop/Character/Character.dart';
 
-import '../../data/model/Anime/Anime.dart';
+import '../../data/model/getTop/Anime/Anime.dart';
 
 abstract class HomeState {}
 

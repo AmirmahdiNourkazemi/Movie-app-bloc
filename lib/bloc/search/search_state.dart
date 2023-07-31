@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:movie_app/data/model/Anime/Anime.dart';
-import 'package:movie_app/data/model/recommendation/Recommendation.dart';
+import 'package:movie_app/data/model/getTop/Anime/Anime.dart';
+import 'package:movie_app/data/model/getTop/recommendation/Recommendation.dart';
 
 abstract class SearchState {}
 

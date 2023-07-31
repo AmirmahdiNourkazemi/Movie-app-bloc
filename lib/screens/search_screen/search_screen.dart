@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/bloc/home/home_state.dart';
 import 'package:movie_app/bloc/search/search_event.dart';
 import 'package:movie_app/bloc/search/search_state.dart';
-import 'package:movie_app/data/model/recommendation/Recommendation.dart';
+import 'package:movie_app/data/model/getTop/recommendation/Recommendation.dart';
 import 'package:movie_app/widgets/recom_container.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../bloc/home/home_bloc.dart';

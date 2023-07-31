@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:movie_app/data/model/recommendation/Recommendation.dart';
+import 'package:movie_app/data/model/getTop/recommendation/Recommendation.dart';
 
-import '../../di/di.dart';
-import '../../utils/api_exeption.dart';
+import '../../../di/di.dart';
+import '../../../utils/api_exeption.dart';
 
 abstract class IgetRecomDatasource {
   Future<Recommendation> getRecom();

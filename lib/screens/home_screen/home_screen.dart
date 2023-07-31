@@ -10,8 +10,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/bloc/home/home_bloc.dart';
 import 'package:movie_app/bloc/home/home_event.dart';
 import 'package:movie_app/bloc/home/home_state.dart';
+import 'package:movie_app/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:movie_app/screens/movie_detail_screen/anime_detail_screen.dart';
-import '../../data/model/Anime/Data.dart';
+import '../../data/model/getTop/Anime/Data.dart';
 
 import '../../widgets/anime_container.dart';
 import '../../widgets/cached_image.dart';
@@ -225,7 +226,10 @@ class _GetTopAnimationForBannerState extends State<GetTopAnimationForBanner> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return AnimeDetailScreen(widget._listData[index]);
+                  return BlocProvider(
+                    create: (context) => MovieDetailBloc(),
+                    child: AnimeDetailScreen(widget._listData[index]),
+                  );
                 },
               ),
             );

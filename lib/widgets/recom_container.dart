@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movie_app/data/model/recommendation/Data.dart';
+import 'package:movie_app/data/model/getTop/recommendation/Data.dart';
 
 import 'cached_image.dart';
 

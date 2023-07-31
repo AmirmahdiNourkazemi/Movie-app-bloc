@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../data/model/Anime/Data.dart';
+import '../data/model/getTop/Anime/Data.dart';
 import 'cached_image.dart';
 
 class GetTopAnime extends StatefulWidget {

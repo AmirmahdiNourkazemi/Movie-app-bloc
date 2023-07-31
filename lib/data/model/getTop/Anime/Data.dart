@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'Aired.dart';
 import 'Demographics.dart';
 import 'Genres.dart';
@@ -15,48 +13,50 @@ import 'ExplicitGenres.dart';
 
 class Data {
   Data({
-      this.malId,
-      this.url,
-      this.images,
-      this.trailer,
-      this.approved,
-      this.titles,
-      this.title,
-      this.titleEnglish,
-      this.titleJapanese,
-      this.titleSynonyms,
-      this.type,
-      this.source,
-      this.episodes,
-      this.status,
-      this.airing,
-      this.aired,
-      this.duration,
-      this.rating,
-      this.score,
-      this.scoredBy,
-      this.rank,
-      this.popularity,
-      this.members,
-      this.favorites,
-      this.synopsis,
-      this.background,
-      this.season,
-      this.year,
-      this.broadcast,
-      this.producers,
-      this.licensors,
-      this.studios,
-      this.genres,
-      this.explicitGenres,
-      this.themes,
-      this.demographics,});
+    this.malId,
+    this.url,
+    this.images,
+    this.trailer,
+    this.approved,
+    this.titles,
+    this.title,
+    this.titleEnglish,
+    this.titleJapanese,
+    this.titleSynonyms,
+    this.type,
+    this.source,
+    this.episodes,
+    this.status,
+    this.airing,
+    this.aired,
+    this.duration,
+    this.rating,
+    this.score,
+    this.scoredBy,
+    this.rank,
+    this.popularity,
+    this.members,
+    this.favorites,
+    this.synopsis,
+    this.background,
+    this.season,
+    this.year,
+    this.broadcast,
+    this.producers,
+    this.licensors,
+    this.studios,
+    this.genres,
+    this.explicitGenres,
+    this.themes,
+    this.demographics,
+  });
 
   Data.fromJson(dynamic json) {
     malId = json['mal_id'];
     url = json['url'];
     images = json['images'] != null ? Images.fromJson(json['images']) : null;
-    trailer = json['trailer'] != null ? Trailer.fromJson(json['trailer']) : null;
+    trailer =
+        json['trailer'] != null ? Trailer.fromJson(json['trailer']) : null;
     approved = json['approved'];
     if (json['titles'] != null) {
       titles = [];
@@ -67,7 +67,9 @@ class Data {
     title = json['title'];
     titleEnglish = json['title_english'];
     titleJapanese = json['title_japanese'];
-    titleSynonyms = json['title_synonyms'] != null ? json['title_synonyms'].cast<String>() : [];
+    titleSynonyms = json['title_synonyms'] != null
+        ? json['title_synonyms'].cast<String>()
+        : [];
     type = json['type'];
     source = json['source'];
     episodes = json['episodes'];
@@ -86,7 +88,9 @@ class Data {
     background = json['background'];
     season = json['season'];
     year = json['year'];
-    broadcast = json['broadcast'] != null ? Broadcast.fromJson(json['broadcast']) : null;
+    broadcast = json['broadcast'] != null
+        ? Broadcast.fromJson(json['broadcast'])
+        : null;
     if (json['producers'] != null) {
       producers = [];
       json['producers'].forEach((v) {
@@ -231,5 +235,4 @@ class Data {
     }
     return map;
   }
-
 }
