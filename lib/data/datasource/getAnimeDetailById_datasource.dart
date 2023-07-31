@@ -7,7 +7,7 @@ import '../model/Anime/getAnimeEpisodes/GetAnimeEpisodes.dart';
 
 abstract class IgetAnimeDetailsDatasource {
   Future<GetAnimeCharacterById> getAnimeCharacterById(int mal_id);
-  Future<GetAnimeEpisodes> getAnimeEpisodesById(int mal_id);
+  Future<GetAnimeEpisodes> getAnimeEpisodesById(int mal_id, int episodes);
 }
 
 class GetAnimeDetailsDatasource extends IgetAnimeDetailsDatasource {
@@ -25,8 +25,10 @@ class GetAnimeDetailsDatasource extends IgetAnimeDetailsDatasource {
   }
 
   @override
-  Future<GetAnimeEpisodes> getAnimeEpisodesById(int mal_id) async {
-    final response = await _dio.get('anime/$mal_id/episodes');
+  Future<GetAnimeEpisodes> getAnimeEpisodesById(
+      int mal_id, int episodes) async {
+    final response = await _dio.get('anime/$mal_id/episodes/$episodes');
+
     try {
       return GetAnimeEpisodes.fromJson(response.data);
     } on DioError catch (ex) {

@@ -10,7 +10,8 @@ import '../model/getTop/Anime/Anime.dart';
 abstract class IgetAnimeDetailByIdRepository {
   Future<Either<String, GetAnimeCharacterById>> getAnimeCharacterById(
       int mal_id);
-  Future<Either<String, GetAnimeEpisodes>> getAnimeEpisodesById(int mal_id);
+  Future<Either<String, GetAnimeEpisodes>> getAnimeEpisodesById(
+      int mal_id, int episodes);
 }
 
 class GetAnimeDetailByIdRemote extends IgetAnimeDetailByIdRepository {
@@ -30,9 +31,10 @@ class GetAnimeDetailByIdRemote extends IgetAnimeDetailByIdRepository {
 
   @override
   Future<Either<String, GetAnimeEpisodes>> getAnimeEpisodesById(
-      int mal_id) async {
+      int mal_id, int episodes) async {
     try {
-      var response = await _animeDetailsDatasource.getAnimeEpisodesById(mal_id);
+      var response =
+          await _animeDetailsDatasource.getAnimeEpisodesById(mal_id, episodes);
       return right(response);
     } on ApiExeption catch (e) {
       return left(e.message ?? 'خطا محتوای متنی ندارد');

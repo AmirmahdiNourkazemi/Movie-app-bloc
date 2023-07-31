@@ -9,7 +9,7 @@ class Data {
     this.aired,
     this.filler,
     this.recap,
-    this.forumUrl,
+    this.synopsis,
   });
 
   Data.fromJson(dynamic json) {
@@ -22,7 +22,7 @@ class Data {
     aired = json['aired'];
     filler = json['filler'];
     recap = json['recap'];
-    forumUrl = json['forum_url'];
+    synopsis = json['synopsis'];
   }
   int? malId;
   String? url;
@@ -33,7 +33,7 @@ class Data {
   String? aired;
   bool? filler;
   bool? recap;
-  String? forumUrl;
+  String? synopsis;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -46,7 +46,7 @@ class Data {
     map['aired'] = aired;
     map['filler'] = filler;
     map['recap'] = recap;
-    map['forum_url'] = forumUrl;
+    map['synopsis'] = synopsis;
     return map;
   }
 }

@@ -11,9 +11,12 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
   MovieDetailBloc() : super(MovieDetialLoadingState()) {
     on<MovieDetailInitEvent>(
       (event, emit) async {
-        var movieDetailById = await _animeDetailByIdRepository
+        var getAnimeCharactesById = await _animeDetailByIdRepository
             .getAnimeCharacterById(event.mal_id);
-        emit(MovieDetailResponseSuccessState(movieDetailById));
+        var getAnimeEpisodesById = await _animeDetailByIdRepository
+            .getAnimeEpisodesById(event.mal_id, event.episodes);
+        emit(MovieDetailResponseSuccessState(
+            getAnimeCharactesById, getAnimeEpisodesById));
       },
     );
   }
