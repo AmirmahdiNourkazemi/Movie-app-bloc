@@ -328,6 +328,23 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                                 AnimeCharacterContainerBuilder(anime.data!),
                           )
                         },
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'News',
+                                style: GoogleFonts.raleway(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         if (state is MovieDetailResponseSuccessState) ...{
                           state.getAnimeNews.fold(
                             (l) => const Text("sth went wrong"),
@@ -365,38 +382,51 @@ class NewsBuilder extends StatelessWidget {
         childAspectRatio: 0.4,
         children: List.generate(news.data!.length, (index) {
           return Card(
-            color: const Color(0xff9496c1),
+            color: const Color.fromARGB(255, 52, 52, 56),
             child: ListTile(
-              leading: CachedImage(
-                imageUrl: news.data![index].images!.jpg!.imageUrl,
-                radious: 5,
+              leading: SizedBox(
+                width: 30,
+                height: 60,
+                child: CachedImage(
+                  imageUrl: news.data![index].images!.jpg!.imageUrl,
+                  radious: 5,
+                ),
               ),
               minLeadingWidth: 0.6,
               minVerticalPadding: 16,
               dense: true,
-              // leading: Icon(
-              //   Icons.comment,
-              //   color: Colors.white,
-              // ),
               isThreeLine: true,
               title: Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
                   '${news.data![index].title}',
+                  maxLines: 3,
                   style: GoogleFonts.raleway(
                     color: Colors.white,
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-              subtitle: Text(
-                'author : ${news.data![index].authorUsername}',
-                style: GoogleFonts.raleway(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                ),
+              subtitle: Row(
+                children: [
+                  const Icon(
+                    Icons.person_2,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  Text(
+                    'author : ${news.data![index].authorUsername}',
+                    style: GoogleFonts.raleway(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ),
           );

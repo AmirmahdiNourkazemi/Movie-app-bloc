@@ -19,7 +19,7 @@ class CachedImage extends StatelessWidget {
         imageUrl: imageUrl ?? '',
         errorWidget: (context, url, error) {
           return Container(
-            color: Colors.red[400],
+            child: Image.asset('assets/images/no-movie.jpg'),
           );
         },
         placeholder: (context, url) {
