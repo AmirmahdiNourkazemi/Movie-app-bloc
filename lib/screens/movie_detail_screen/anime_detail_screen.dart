@@ -7,11 +7,13 @@ import 'package:movie_app/bloc/movie_detail/movie_detail_event.dart';
 import 'package:movie_app/bloc/movie_detail/movie_detail_state.dart';
 import 'package:movie_app/data/model/Anime/AnimeNews/AnimeNews.dart';
 import 'package:movie_app/data/model/getTop/Anime/Data.dart';
+import 'package:movie_app/widgets/anime_container.dart';
 import 'package:movie_app/widgets/cached_image.dart';
 
 import '../../data/model/Anime/getAnimeEpisodes/GetAnimeEpisodes.dart';
 import '../../widgets/anime_character_container.dart';
 import '../../widgets/character_container_builder.dart';
+import '../../widgets/recom_container_detail.dart';
 import '../../widgets/text_widget.dart';
 
 class AnimeDetailScreen extends StatefulWidget {
@@ -349,6 +351,29 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                           state.getAnimeNews.fold(
                             (l) => const Text("sth went wrong"),
                             (news) => NewsBuilder(news),
+                          )
+                        },
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Recommended Anime',
+                                style: GoogleFonts.raleway(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (state is MovieDetailResponseSuccessState) ...{
+                          state.getAnimeRecommendation.fold(
+                            (l) => const Text("sth went wrong"),
+                            (recomm) => GetRecomContainerDetail(recomm.data!),
                           )
                         }
                       ],

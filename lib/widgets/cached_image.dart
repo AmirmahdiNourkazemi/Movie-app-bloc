@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CachedImage extends StatelessWidget {
   String? imageUrl;
@@ -23,7 +24,13 @@ class CachedImage extends StatelessWidget {
           );
         },
         placeholder: (context, url) {
-          return Image.asset('assets/images/no-movie.jpg');
+          return SizedBox(
+            child: Shimmer.fromColors(
+              baseColor: Colors.white,
+              highlightColor: Colors.white60,
+              child: Image.asset('assets/images/no-movie.jpg'),
+            ),
+          );
         },
       ),
     );
