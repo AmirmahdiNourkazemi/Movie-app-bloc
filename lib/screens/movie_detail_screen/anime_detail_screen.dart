@@ -477,36 +477,40 @@ class _GetSynopsisState extends State<GetSynopsis>
     with TickerProviderStateMixin<GetSynopsis> {
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      AnimatedSize(
-        duration: const Duration(milliseconds: 200),
-        child: ConstrainedBox(
-          constraints: widget.isExpanded
-              ? const BoxConstraints()
-              : const BoxConstraints(maxHeight: 20.0),
-          child: Text(
-            '${widget.episodes.data!.synopsis}',
-            softWrap: true,
-            overflow: TextOverflow.fade,
-            style: GoogleFonts.raleway(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+    if (widget.episodes.data!.title!.isNotEmpty) {
+      return Column(children: <Widget>[
+        AnimatedSize(
+          duration: const Duration(milliseconds: 200),
+          child: ConstrainedBox(
+            constraints: widget.isExpanded
+                ? const BoxConstraints()
+                : const BoxConstraints(maxHeight: 20.0),
+            child: Text(
+              '${widget.episodes.data!.synopsis}',
+              softWrap: true,
+              overflow: TextOverflow.fade,
+              style: GoogleFonts.raleway(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
-      ),
-      widget.isExpanded
-          ? ConstrainedBox(constraints: const BoxConstraints())
-          : TextButton(
-              child: Text('See more',
-                  style: GoogleFonts.raleway(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  )),
-              onPressed: () => setState(() => widget.isExpanded = true),
-            )
-    ]);
+        widget.isExpanded
+            ? ConstrainedBox(constraints: const BoxConstraints())
+            : TextButton(
+                child: Text('See more',
+                    style: GoogleFonts.raleway(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    )),
+                onPressed: () => setState(() => widget.isExpanded = true),
+              )
+      ]);
+    } else {
+      return Text('');
+    }
   }
 }

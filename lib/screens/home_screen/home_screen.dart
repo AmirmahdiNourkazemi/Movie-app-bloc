@@ -216,7 +216,6 @@ class _GetTopAnimationForBannerState extends State<GetTopAnimationForBanner> {
           autoPlayCurve: Curves.easeInOutCubic,
           enlargeCenterPage: true,
           enlargeFactor: 0.16,
-          //onPageChanged: callbackFunction,
           scrollDirection: Axis.horizontal,
         ),
         itemCount: widget._listData.length,

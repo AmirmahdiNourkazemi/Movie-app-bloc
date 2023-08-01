@@ -29,8 +29,7 @@ class GetAnimeDetailsDatasource extends IgetAnimeDetailsDatasource {
   }
 
   @override
-  Future<GetAnimeEpisodes> getAnimeEpisodesById(
-      int malId, int episodes) async {
+  Future<GetAnimeEpisodes> getAnimeEpisodesById(int malId, int episodes) async {
     final response = await _dio.get('anime/$malId/episodes/$episodes');
 
     try {
