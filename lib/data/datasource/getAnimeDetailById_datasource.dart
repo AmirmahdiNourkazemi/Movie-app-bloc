@@ -1,22 +1,24 @@
 import 'package:dio/dio.dart';
 import 'package:movie_app/data/model/Anime/AnimeNews/AnimeNews.dart';
 import 'package:movie_app/data/model/Anime/getAnimeCharacterById/GetAnimeCharacterById.dart';
+import 'package:movie_app/data/model/Anime/getAnimeRecommendation/GetAnimeRecommendation.dart';
 
 import '../../di/di.dart';
 import '../../utils/api_exeption.dart';
 import '../model/Anime/getAnimeEpisodes/GetAnimeEpisodes.dart';
 
 abstract class IgetAnimeDetailsDatasource {
-  Future<GetAnimeCharacterById> getAnimeCharacterById(int mal_id);
-  Future<GetAnimeEpisodes> getAnimeEpisodesById(int mal_id, int episodes);
-  Future<AnimeNews> getAnimeNewsById(int mal_id);
+  Future<GetAnimeCharacterById> getAnimeCharacterById(int malId);
+  Future<GetAnimeEpisodes> getAnimeEpisodesById(int malId, int episodes);
+  Future<AnimeNews> getAnimeNewsById(int malId);
+  Future<GetAnimeRecommendation> getAnimeRecommendationById(int malId);
 }
 
 class GetAnimeDetailsDatasource extends IgetAnimeDetailsDatasource {
   @override
   final Dio _dio = locator.get();
-  Future<GetAnimeCharacterById> getAnimeCharacterById(int mal_id) async {
-    final response = await _dio.get('anime/$mal_id/characters');
+  Future<GetAnimeCharacterById> getAnimeCharacterById(int malId) async {
+    final response = await _dio.get('anime/$malId/characters');
     try {
       return GetAnimeCharacterById.fromJson(response.data);
     } on DioError catch (ex) {
@@ -28,8 +30,8 @@ class GetAnimeDetailsDatasource extends IgetAnimeDetailsDatasource {
 
   @override
   Future<GetAnimeEpisodes> getAnimeEpisodesById(
-      int mal_id, int episodes) async {
-    final response = await _dio.get('anime/$mal_id/episodes/$episodes');
+      int malId, int episodes) async {
+    final response = await _dio.get('anime/$malId/episodes/$episodes');
 
     try {
       return GetAnimeEpisodes.fromJson(response.data);
@@ -41,11 +43,23 @@ class GetAnimeDetailsDatasource extends IgetAnimeDetailsDatasource {
   }
 
   @override
-  Future<AnimeNews> getAnimeNewsById(int mal_id) async {
-    final response = await _dio.get('anime/$mal_id/news');
+  Future<AnimeNews> getAnimeNewsById(int malId) async {
+    final response = await _dio.get('anime/$malId/news');
 
     try {
       return AnimeNews.fromJson(response.data);
+    } on DioError catch (ex) {
+      throw ApiExeption(ex.response?.data['message'], ex.response?.statusCode);
+    } catch (ex) {
+      throw ApiExeption('unknown error happend', 0);
+    }
+  }
+
+  @override
+  Future<GetAnimeRecommendation> getAnimeRecommendationById(int malId) async {
+    final response = await _dio.get('anime/$malId/recommendations');
+    try {
+      return GetAnimeRecommendation.fromJson(response.data);
     } on DioError catch (ex) {
       throw ApiExeption(ex.response?.data['message'], ex.response?.statusCode);
     } catch (ex) {
