@@ -26,18 +26,19 @@ class _GetRecomContainerDetailState extends State<GetRecomContainerDetail> {
         itemCount: widget._listData.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            // onTap: () {
-            //   Navigator.of(context).push(
-            //     MaterialPageRoute(
-            //       builder: (context) {
-            //         return BlocProvider(
-            //           create: (context) => MovieDetailBloc(),
-            //           child: AnimeDetailScreen(widget._listData[index]),
-            //         );
-            //       },
-            //     ),
-            //   );
-            // },
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return BlocProvider(
+                      create: (context) => MovieDetailBloc(),
+                      child: AnimeDetailScreen(
+                          widget._listData[index].entry!.malId!),
+                    );
+                  },
+                ),
+              );
+            },
             child: Padding(
               padding: const EdgeInsets.only(right: 10),
               child: SizedBox(

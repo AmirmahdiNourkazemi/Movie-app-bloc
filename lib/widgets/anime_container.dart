@@ -31,7 +31,7 @@ class _GetTopAnimeState extends State<GetTopAnime> {
                   builder: (context) {
                     return BlocProvider(
                       create: (context) => MovieDetailBloc(),
-                      child: AnimeDetailScreen(widget._listData[index]),
+                      child: AnimeDetailScreen(widget._listData[index].malId!),
                     );
                   },
                 ),

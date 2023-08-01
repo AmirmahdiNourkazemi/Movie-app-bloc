@@ -13,17 +13,20 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       (event, emit) async {
         var getAnimeCharactesById = await _animeDetailByIdRepository
             .getAnimeCharacterById(event.mal_id);
-        var getAnimeEpisodesById = await _animeDetailByIdRepository
-            .getAnimeEpisodesById(event.mal_id, event.episodes);
+        // var getAnimeEpisodesById = await _animeDetailByIdRepository
+        //     .getAnimeEpisodesById(event.mal_id, event.episodes);
         var getAnimeNewsById =
             await _animeDetailByIdRepository.getAnimeNewsById(event.mal_id);
         var getAnimeRecommendationById = await _animeDetailByIdRepository
             .getAnimeRecommendationById(event.mal_id);
+        var getAnimeFullById =
+            await _animeDetailByIdRepository.getAnimeFullById(event.mal_id);
         emit(MovieDetailResponseSuccessState(
             getAnimeCharactesById,
-            getAnimeEpisodesById,
+            // getAnimeEpisodesById
             getAnimeNewsById,
-            getAnimeRecommendationById));
+            getAnimeRecommendationById,
+            getAnimeFullById));
       },
     );
   }

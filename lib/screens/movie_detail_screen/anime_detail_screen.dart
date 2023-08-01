@@ -17,8 +17,9 @@ import '../../widgets/recom_container_detail.dart';
 import '../../widgets/text_widget.dart';
 
 class AnimeDetailScreen extends StatefulWidget {
-  final Data anime;
-  const AnimeDetailScreen(this.anime, {super.key});
+  final int malId;
+
+  const AnimeDetailScreen(this.malId, {super.key});
 
   @override
   State<AnimeDetailScreen> createState() => _AnimeDetailScreenState();
@@ -28,9 +29,8 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
   @override
   void initState() {
     BlocProvider.of<MovieDetailBloc>(context)
-        .add(MovieDetailInitEvent(widget.anime.malId!, widget.anime.episodes!));
-    print(widget.anime.malId);
-    print(widget.anime.episodes);
+        .add(MovieDetailInitEvent(widget.malId));
+    print(widget.malId);
   }
 
   @override
@@ -48,340 +48,401 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
         ),
       ),
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
           builder: (context, state) {
-            return NestedScrollView(
-              floatHeaderSlivers: true,
-              headerSliverBuilder: (context, isScrolled) {
-                return [
-                  SliverAppBar(
-                    pinned: true,
-                    stretch: true,
-                    toolbarHeight: 40,
-                    actions: const [
-                      Padding(
-                        padding: EdgeInsets.only(top: 18, right: 18),
-                        child: Icon(
-                          Icons.menu,
-                        ),
-                      ),
-                    ],
-                    bottom: PreferredSize(
-                      preferredSize: const Size.fromHeight(5),
-                      child: Container(
-                        height: 14,
-                        decoration: const BoxDecoration(
-                          color: Color(0xff1F2722),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                          ),
-                        ),
-                      ),
+            if (state is MovieDetialLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return NestedScrollView(
+                floatHeaderSlivers: true,
+                headerSliverBuilder: (context, isScrolled) {
+                  return [
+                    if (state is MovieDetailResponseSuccessState) ...{
+                      state.getAnimeFullById.fold(
+                          (l) => Text('sth went wrong'),
+                          (anime) => SliverAppBar(
+                                pinned: true,
+                                stretch: true,
+                                toolbarHeight: 40,
+                                actions: const [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 18, right: 18),
+                                    child: Icon(
+                                      Icons.menu,
+                                    ),
+                                  ),
+                                ],
+                                bottom: PreferredSize(
+                                  preferredSize: const Size.fromHeight(5),
+                                  child: Container(
+                                    height: 14,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xff1F2722),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15),
+                                        topRight: Radius.circular(15),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                backgroundColor: const Color(0xff1F2722),
+                                expandedHeight: 250,
+                                flexibleSpace: FlexibleSpaceBar(
+                                  background: Stack(
+                                    alignment: AlignmentDirectional.center,
+                                    children: [
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: CachedImage(
+                                          imageUrl: anime
+                                              .data!.images!.jpg!.largeImageUrl,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 25,
+                                        child: Container(
+                                          width: 130,
+                                          height: 40,
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            color: Colors.red,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.play_arrow_outlined,
+                                                color: Colors.white,
+                                                size: 30,
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                "Play",
+                                                style: GoogleFonts.raleway(
+                                                  color: Colors.white,
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ))
+                    },
+                  ];
+                },
+                body: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Color(0xff1F2722),
+                        Color(0xff131312),
+                      ],
                     ),
-                    backgroundColor: const Color(0xff1F2722),
-                    expandedHeight: 250,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Stack(
-                        alignment: AlignmentDirectional.center,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: SingleChildScrollView(
+                      child: Column(
                         children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: CachedImage(
-                              imageUrl: widget.anime.images!.jpg!.largeImageUrl,
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 25,
-                            child: Container(
-                              width: 130,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                color: Colors.red,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                          if (state is MovieDetailResponseSuccessState) ...{
+                            state.getAnimeFullById.fold((l) {
+                              return const Text('sth went wrong');
+                            }, (anime) {
+                              return Column(
                                 children: [
-                                  const Icon(
-                                    Icons.play_arrow_outlined,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
                                   Text(
-                                    "Play",
+                                    anime.data!.title!,
                                     style: GoogleFonts.raleway(
                                       color: Colors.white,
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ];
-              },
-              body: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Color(0xff1F2722),
-                      Color(0xff131312),
-                    ],
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Text(
-                          widget.anime.title!,
-                          style: GoogleFonts.raleway(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                verticalDirection: VerticalDirection.up,
-                                children: [
-                                  Chip(
-                                    avatar: const Icon(Icons.movie),
-                                    label: Text(
-                                      "episode:${widget.anime.episodes.toString()}",
-                                      style: GoogleFonts.raleway(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                  const SizedBox(
+                                    height: 10,
                                   ),
-                                  Chip(
-                                    avatar: const Icon(Icons.timelapse),
-                                    label: Text(
-                                      "${widget.anime.duration}",
-                                      style: GoogleFonts.raleway(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  Chip(
-                                    avatar: const Icon(Icons.local_movies),
-                                    label: Text(
-                                      "genre: ${widget.anime.genres![0].name}",
-                                      style: GoogleFonts.raleway(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Chip(
-                                    avatar: const Icon(Icons.rate_review),
-                                    label: Text(
-                                      "members: ${widget.anime.rating}",
-                                      style: GoogleFonts.raleway(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  // ignore: unrelated_type_equality_checks
-                                  if (widget.anime.year == Null) ...{
-                                    Chip(
-                                      avatar: const Icon(Icons
-                                          .production_quantity_limits_rounded),
-                                      label: Text(
-                                        "${widget.anime.year}",
-                                        style: GoogleFonts.raleway(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
+                                  SizedBox(
+                                    height: 30,
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          verticalDirection:
+                                              VerticalDirection.up,
+                                          children: [
+                                            if (anime.data!.episodes!
+                                                    .toString() !=
+                                                Null) ...{
+                                              Chip(
+                                                avatar: const Icon(Icons.movie),
+                                                label: Text(
+                                                  "episode:${anime.data!.episodes!.toString()}",
+                                                  style: GoogleFonts.raleway(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            },
+                                            if (anime.data!.duration!
+                                                .isNotEmpty) ...{
+                                              Chip(
+                                                avatar:
+                                                    const Icon(Icons.timelapse),
+                                                label: Text(
+                                                  "${anime.data!.duration}",
+                                                  style: GoogleFonts.raleway(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            },
+                                            if (anime
+                                                .data!.genres!.isNotEmpty) ...{
+                                              Chip(
+                                                avatar: const Icon(
+                                                    Icons.local_movies),
+                                                label: Text(
+                                                  "genre: ${anime.data!.genres![0].name}",
+                                                  style: GoogleFonts.raleway(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            }
+                                          ],
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Chip(
+                                              avatar:
+                                                  const Icon(Icons.rate_review),
+                                              label: Text(
+                                                "members: ${anime.data!.rating}",
+                                                style: GoogleFonts.raleway(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                            // ignore: unrelated_type_equality_checks
+                                            if (anime.data!.year == Null) ...{
+                                              Chip(
+                                                avatar: const Icon(Icons
+                                                    .production_quantity_limits_rounded),
+                                                label: Text(
+                                                  "${anime.data!.year}",
+                                                  style: GoogleFonts.raleway(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            }
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  if (anime.data!.broadcast!.timezone == Null &&
+                                      anime.data!.broadcast!.day == Null &&
+                                      anime.data!.broadcast!.string ==
+                                          Null) ...{
+                                    SizedBox(
+                                      height: 30,
+                                      child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Chip(
+                                                avatar: const Icon(Icons.flag),
+                                                label: Text(
+                                                  "${anime.data!.broadcast!.timezone}",
+                                                  style: GoogleFonts.raleway(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                              Chip(
+                                                avatar: const Icon(Icons
+                                                    .published_with_changes_rounded),
+                                                label: Text(
+                                                  "${anime.data!.broadcast!.string}",
+                                                  style: GoogleFonts.raleway(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  },
+                                ],
+                              );
+                            })
+                          },
+                          // if (state is MovieDetailResponseSuccessState) ...{
+                          //   state.getAnimeEpisodes.fold(
+                          //     (l) => Chip(
+                          //       avatar: const Icon(
+                          //           Icons.published_with_changes_rounded),
+                          //       label: Text(
+                          //         "just a episode",
+                          //         style: GoogleFonts.raleway(
+                          //           color: Colors.black,
+                          //           fontSize: 12,
+                          //           fontWeight: FontWeight.w600,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     (episodes) => GetSynopsis(episodes),
+                          //   )
+                          // },
+
+                          if (state is MovieDetailResponseSuccessState) ...{
+                            state.getAnimeCharactesById.fold(
+                                (l) => const Text("sth went wrong"),
+                                (anime) => Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 10),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Characters',
+                                                style: GoogleFonts.raleway(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        if (anime.data!.isNotEmpty) ...{
+                                          AnimeCharacterContainerBuilder(
+                                              anime.data!)
+                                        }
+                                      ],
+                                    ))
+                          },
+
+                          if (state is MovieDetailResponseSuccessState) ...{
+                            state.getAnimeNews.fold(
+                              (l) => const Text("sth went wrong"),
+                              (news) => Column(
+                                children: [
+                                  if (news.data!.isNotEmpty) ...{
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'News',
+                                            style: GoogleFonts.raleway(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
+                                    NewsBuilder(news)
                                   }
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        if (widget.anime.broadcast!.timezone == Null &&
-                            widget.anime.broadcast!.day == Null &&
-                            widget.anime.broadcast!.string == Null) ...{
-                          SizedBox(
-                            height: 30,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Chip(
-                                      avatar: const Icon(Icons.flag),
-                                      label: Text(
-                                        "${widget.anime.broadcast!.timezone}",
-                                        style: GoogleFonts.raleway(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
+                            )
+                          },
+
+                          if (state is MovieDetailResponseSuccessState) ...{
+                            state.getAnimeRecommendation.fold(
+                              (l) => const Text("sth went wrong"),
+                              (recomm) => Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Recommended Anime',
+                                          style: GoogleFonts.raleway(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    Chip(
-                                      avatar: const Icon(
-                                          Icons.published_with_changes_rounded),
-                                      label: Text(
-                                        "${widget.anime.broadcast!.string}",
-                                        style: GoogleFonts.raleway(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        },
-                        if (state is MovieDetailResponseSuccessState) ...{
-                          state.getAnimeEpisodes.fold(
-                            (l) => Chip(
-                              avatar: const Icon(
-                                  Icons.published_with_changes_rounded),
-                              label: Text(
-                                "just a episode",
-                                style: GoogleFonts.raleway(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                  ),
+                                  GetRecomContainerDetail(recomm.data!)
+                                ],
                               ),
-                            ),
-                            (episodes) => GetSynopsis(episodes),
-                          )
-                        },
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Characters',
-                                style: GoogleFonts.raleway(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (state is MovieDetailResponseSuccessState) ...{
-                          state.getAnimeCharactesById.fold(
-                            (l) => const Text("sth went wrong"),
-                            (anime) =>
-                                AnimeCharacterContainerBuilder(anime.data!),
-                          )
-                        },
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'News',
-                                style: GoogleFonts.raleway(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (state is MovieDetailResponseSuccessState) ...{
-                          state.getAnimeNews.fold(
-                            (l) => const Text("sth went wrong"),
-                            (news) => NewsBuilder(news),
-                          )
-                        },
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Recommended Anime',
-                                style: GoogleFonts.raleway(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (state is MovieDetailResponseSuccessState) ...{
-                          state.getAnimeRecommendation.fold(
-                            (l) => const Text("sth went wrong"),
-                            (recomm) => GetRecomContainerDetail(recomm.data!),
-                          )
-                        }
-                      ],
+                            )
+                          }
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
+              );
+            }
           },
         ),
       ),
