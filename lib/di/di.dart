@@ -8,11 +8,13 @@ import 'package:movie_app/data/repository/getRecommendation_repository.dart';
 import 'package:movie_app/data/repository/getSeason_repository.dart';
 import 'package:movie_app/data/repository/getTopAnime_repository.dart';
 import 'package:movie_app/data/repository/getTopCharacter_repository.dart';
+import 'package:movie_app/data/repository/search_repository.dart';
 
 import '../data/datasource/TopDatasources/getRecommendation_datasource.dart';
 import '../data/datasource/TopDatasources/getSeason_datasource.dart';
 import '../data/datasource/TopDatasources/getTopAnime_datasource.dart';
 import '../data/datasource/TopDatasources/getTopCharacter_datasource.dart';
+import '../data/datasource/TopDatasources/search_datasource.dart';
 
 var locator = GetIt.instance;
 
@@ -35,6 +37,7 @@ Future<void> getItInit() async {
       .registerFactory<IgetMagazineDatasource>(() => GetMagazineDatasource());
   locator.registerFactory<IgetAnimeDetailsDatasource>(
       () => GetAnimeDetailsDatasource());
+  locator.registerFactory<IsearchDatasource>(() => SearchDatasouce());
   //repository
   locator.registerFactory<IgetTopAnimeRepository>(() => GetTopAnimeRemote());
   locator.registerFactory<IgetSeasonRepository>(() => GetSeasonRemote());
@@ -43,4 +46,5 @@ Future<void> getItInit() async {
   locator.registerFactory<IgetMagazineRepository>(() => GetMagazineRemote());
   locator.registerFactory<IgetAnimeDetailByIdRepository>(
       () => GetAnimeDetailByIdRemote());
+  locator.registerFactory<IsearchRepository>(() => SearchRemote());
 }

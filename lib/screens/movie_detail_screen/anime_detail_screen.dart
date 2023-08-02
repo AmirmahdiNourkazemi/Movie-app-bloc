@@ -186,8 +186,8 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                                               VerticalDirection.up,
                                           children: [
                                             if (anime.data!.episodes!
-                                                    .toString() !=
-                                                Null) ...{
+                                                .toString()
+                                                .isNotEmpty) ...{
                                               Chip(
                                                 avatar: const Icon(Icons.movie),
                                                 label: Text(

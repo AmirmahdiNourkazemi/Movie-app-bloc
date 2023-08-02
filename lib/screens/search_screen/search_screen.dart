@@ -22,6 +22,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final TextEditingController _searchController = TextEditingController();
   late YoutubePlayerController _controller;
   Random random = Random();
 
@@ -48,7 +49,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _searchController = TextEditingController();
+    final SearchBloc searchBloc = BlocProvider.of<SearchBloc>(context);
+
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -74,7 +76,65 @@ class _SearchScreenState extends State<SearchScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SearchBox(searchController: _searchController),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: TextField(
+                          onChanged: (value) {
+                            searchBloc.add(SearchResult(value));
+                          },
+                          cursorColor: Colors.white,
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            focusColor: Colors.white,
+                            hintText: 'Search...',
+                            hintStyle: const TextStyle(color: Colors.white),
+                            // Add a clear button to the search bar
+                            suffixIcon: IconButton(
+                              icon: const Icon(
+                                Icons.clear,
+                                color: Colors.white,
+                              ),
+                              onPressed: () => _searchController.clear(),
+                            ),
+                            // Add a search icon or button to the search bar
+                            prefixIcon: IconButton(
+                              icon: const Icon(
+                                Icons.search,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                // Perform the search here
+                              },
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (state is SearchResultState) ...{
+                      state.getSearchByWord.fold(
+                        (l) => const ListTile(
+                          title: Text('no result found'),
+                        ),
+                        (search) => Expanded(
+                          child: ListView.builder(
+                            itemCount: search.data!.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(search.data![index].title!),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    },
                     // Padding(
                     //   padding: const EdgeInsets.all(10.0),
                     //   child: ClipRRect(
@@ -130,53 +190,56 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 
-class SearchBox extends StatelessWidget {
-  const SearchBox({
-    super.key,
-    required TextEditingController searchController,
-  }) : _searchController = searchController;
+// class SearchBox extends StatelessWidget {
+//   const SearchBox({
+//     super.key,
+//     required TextEditingController searchController,
+//   }) : _searchController = searchController;
 
-  final TextEditingController _searchController;
+//   final TextEditingController _searchController;
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: TextField(
-          cursorColor: Colors.white,
-          controller: _searchController,
-          decoration: InputDecoration(
-            fillColor: Colors.white,
-            focusColor: Colors.white,
-            hintText: 'Search...',
-            hintStyle: const TextStyle(color: Colors.white),
-            // Add a clear button to the search bar
-            suffixIcon: IconButton(
-              icon: const Icon(
-                Icons.clear,
-                color: Colors.white,
-              ),
-              onPressed: () => _searchController.clear(),
-            ),
-            // Add a search icon or button to the search bar
-            prefixIcon: IconButton(
-              icon: const Icon(
-                Icons.search,
-                color: Colors.white,
-                size: 30,
-              ),
-              onPressed: () {
-                // Perform the search here
-              },
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+//       child: Container(
+//         padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//         child: TextField(
+//           onChanged: (value) {
+//             SearchBloc.add(SearchInitEvent(value));
+//           },
+//           cursorColor: Colors.white,
+//           controller: _searchController,
+//           decoration: InputDecoration(
+//             fillColor: Colors.white,
+//             focusColor: Colors.white,
+//             hintText: 'Search...',
+//             hintStyle: const TextStyle(color: Colors.white),
+//             // Add a clear button to the search bar
+//             suffixIcon: IconButton(
+//               icon: const Icon(
+//                 Icons.clear,
+//                 color: Colors.white,
+//               ),
+//               onPressed: () => _searchController.clear(),
+//             ),
+//             // Add a search icon or button to the search bar
+//             prefixIcon: IconButton(
+//               icon: const Icon(
+//                 Icons.search,
+//                 color: Colors.white,
+//                 size: 30,
+//               ),
+//               onPressed: () {
+//                 // Perform the search here
+//               },
+//             ),
+//             border: OutlineInputBorder(
+//               borderRadius: BorderRadius.circular(20.0),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
