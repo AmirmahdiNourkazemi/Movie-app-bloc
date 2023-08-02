@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,111 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     BlocProvider.of<HomeBloc>(context).add(HomeInitEvent());
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomLeft,
+          colors: [
+            Color(0xff1F2722),
+            Color(0xff131312),
+          ],
+        ),
+      ),
+      child: DefaultTabController(
+        length: 7,
+        child: Column(
+          children: <Widget>[
+            ButtonsTabBar(
+              center: true,
+              // Customize the appearance and behavior of the tab bar
+              backgroundColor: const Color(0xff9496c1),
+              borderWidth: 1,
+              borderColor: const Color(0xff9496c1),
+              labelStyle: GoogleFonts.raleway(
+                color: Colors.white,
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+              ),
+              unselectedLabelStyle: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+
+              // Add your tabs here
+              tabs: const [
+                Tab(
+                  icon: Icon(
+                    Icons.home_max_rounded,
+                  ),
+                  text: 'Home',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.trending_up,
+                  ),
+                  text: 'Rank',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.score,
+                  ),
+                  text: 'Score',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.local_fire_department,
+                  ),
+                  text: 'popularity',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.child_care,
+                  ),
+                  text: 'Children',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.man,
+                  ),
+                  text: 'Teens 13 or older',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.six_k_rounded,
+                  ),
+                  text: '17+ (violence & profanity)',
+                ),
+              ],
+            ),
+            const Expanded(
+              child: TabBarView(
+                children: [
+                  HomeDefaultScreen(),
+                  HomeDefaultScreen(),
+                  HomeDefaultScreen(),
+                  HomeDefaultScreen(),
+                  HomeDefaultScreen(),
+                  HomeDefaultScreen(),
+                  HomeDefaultScreen(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
+  }
+}
+
+class HomeDefaultScreen extends StatelessWidget {
+  const HomeDefaultScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
