@@ -123,17 +123,56 @@ class _SearchScreenState extends State<SearchScreen> {
                         (l) => const ListTile(
                           title: Text('no result found'),
                         ),
-                        (search) => Expanded(
-                          child: ListView.builder(
-                            itemCount: search.data!.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(search.data![index].title!),
-                              );
-                            },
-                          ),
+                        (search) => Stack(
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              child: ListView.builder(
+                                itemCount: search.data!.length,
+                                itemBuilder: (context, index) {
+                                  print(search.data![index].title!);
+                                  return ListTile(
+                                    title: Text(search.data![index].title!),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       )
+                    } else ...{
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12),
+                        child: Text(
+                          'Recommendation',
+                          style: GoogleFonts.raleway(
+                            color: Colors.white,
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      if (state is SearchSuccessResponse) ...{
+                        state.getRecom.fold((l) => const Text('sth went wrong'),
+                            (recomm) => RecomContainer(recomm.data!))
+                      },
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12, top: 12),
+                        child: Text(
+                          'Upcomming seasons',
+                          style: GoogleFonts.raleway(
+                            color: Colors.white,
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      if (state is SearchSuccessResponse) ...{
+                        state.getUpcommingSeasons.fold(
+                          (l) => const Text('sth went wrong'),
+                          (recomm) => GetTopAnime(recomm.data!),
+                        )
+                      },
                     },
                     // Padding(
                     //   padding: const EdgeInsets.all(10.0),
@@ -147,38 +186,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     //     ),
                     //   ),
                     // ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: Text(
-                        'Recommendation',
-                        style: GoogleFonts.raleway(
-                          color: Colors.white,
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    if (state is SearchSuccessResponse) ...{
-                      state.getRecom.fold((l) => const Text('sth went wrong'),
-                          (recomm) => RecomContainer(recomm.data!))
-                    },
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12, top: 12),
-                      child: Text(
-                        'Upcomming seasons',
-                        style: GoogleFonts.raleway(
-                          color: Colors.white,
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    if (state is SearchSuccessResponse) ...{
-                      state.getUpcommingSeasons.fold(
-                        (l) => const Text('sth went wrong'),
-                        (recomm) => GetTopAnime(recomm.data!),
-                      )
-                    },
                   ],
                 ),
               );
