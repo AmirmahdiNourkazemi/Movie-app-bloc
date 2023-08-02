@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
             FlashyTabBarItem(
               activeColor: Colors.white,
               icon: const Icon(
-                Icons.home,
+                Icons.home_filled,
                 size: 30,
               ),
               title: const Text('Home'),

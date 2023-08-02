@@ -35,100 +35,103 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomLeft,
-          colors: [
-            Color(0xff1F2722),
-            Color(0xff131312),
-          ],
-        ),
-      ),
-      child: DefaultTabController(
-        length: 7,
-        child: Column(
-          children: <Widget>[
-            ButtonsTabBar(
-              center: true,
-              // Customize the appearance and behavior of the tab bar
-              backgroundColor: const Color(0xff9496c1),
-              borderWidth: 1,
-              borderColor: const Color(0xff9496c1),
-              labelStyle: GoogleFonts.raleway(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-              ),
-              unselectedLabelStyle: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color(0xff1F2722),
+                Color(0xff131312),
+              ],
+            ),
+          ),
+          child: DefaultTabController(
+            length: 7,
+            child: Column(
+              children: <Widget>[
+                ButtonsTabBar(
+                  elevation: 3,
+                  height: 38,
+                  center: true,
+                  // Customize the appearance and behavior of the tab bar
+                  backgroundColor: const Color(0xff9496c1),
+                  borderWidth: 1,
+                  borderColor: const Color(0xff9496c1),
+                  labelStyle: GoogleFonts.raleway(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
 
-              // Add your tabs here
-              tabs: const [
-                Tab(
-                  icon: Icon(
-                    Icons.home_max_rounded,
-                  ),
-                  text: 'Home',
+                  // Add your tabs here
+                  tabs: const [
+                    Tab(
+                      icon: Icon(
+                        Icons.home_max_rounded,
+                      ),
+                      text: 'Home',
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.trending_up,
+                      ),
+                      text: 'Rank',
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.score,
+                      ),
+                      text: 'Score',
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.local_fire_department,
+                      ),
+                      text: 'popularity',
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.child_care,
+                      ),
+                      text: 'Children',
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.man,
+                      ),
+                      text: 'Teens 13 or older',
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.six_k_rounded,
+                      ),
+                      text: '17+ (violence & profanity)',
+                    ),
+                  ],
                 ),
-                Tab(
-                  icon: Icon(
-                    Icons.trending_up,
+                const Expanded(
+                  child: TabBarView(
+                    children: [
+                      HomeDefaultScreen(),
+                      HomeDefaultScreen(),
+                      HomeDefaultScreen(),
+                      HomeDefaultScreen(),
+                      HomeDefaultScreen(),
+                      HomeDefaultScreen(),
+                      HomeDefaultScreen(),
+                    ],
                   ),
-                  text: 'Rank',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.score,
-                  ),
-                  text: 'Score',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.local_fire_department,
-                  ),
-                  text: 'popularity',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.child_care,
-                  ),
-                  text: 'Children',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.man,
-                  ),
-                  text: 'Teens 13 or older',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.six_k_rounded,
-                  ),
-                  text: '17+ (violence & profanity)',
                 ),
               ],
             ),
-            const Expanded(
-              child: TabBarView(
-                children: [
-                  HomeDefaultScreen(),
-                  HomeDefaultScreen(),
-                  HomeDefaultScreen(),
-                  HomeDefaultScreen(),
-                  HomeDefaultScreen(),
-                  HomeDefaultScreen(),
-                  HomeDefaultScreen(),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 }
 

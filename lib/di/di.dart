@@ -15,6 +15,7 @@ import '../data/datasource/TopDatasources/getSeason_datasource.dart';
 import '../data/datasource/TopDatasources/getTopAnime_datasource.dart';
 import '../data/datasource/TopDatasources/getTopCharacter_datasource.dart';
 import '../data/datasource/TopDatasources/search_datasource.dart';
+import '../data/datasource/search_filter_datasource/search_filter_datasource.dart';
 
 var locator = GetIt.instance;
 
@@ -38,6 +39,8 @@ Future<void> getItInit() async {
   locator.registerFactory<IgetAnimeDetailsDatasource>(
       () => GetAnimeDetailsDatasource());
   locator.registerFactory<IsearchDatasource>(() => SearchDatasouce());
+  locator
+      .registerFactory<ISearchFilterDatasource>(() => SearchFilterDatasource());
   //repository
   locator.registerFactory<IgetTopAnimeRepository>(() => GetTopAnimeRemote());
   locator.registerFactory<IgetSeasonRepository>(() => GetSeasonRemote());
