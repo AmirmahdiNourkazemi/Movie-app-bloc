@@ -51,12 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: DefaultTabController(
+        initialIndex: 0,
         length: 7,
         child: Column(
           children: <Widget>[
             ButtonsTabBar(
               elevation: 3,
-              height: 40,
+              height: 43,
               buttonMargin: const EdgeInsets.all(3),
               center: true,
               // Customize the appearance and behavior of the tab bar
@@ -72,12 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
-
-              // Add your tabs here
               tabs: const [
                 Tab(
                   icon: Icon(
-                    Icons.home_max_rounded,
+                    Icons.home_filled,
                   ),
                   text: 'Home',
                 ),
@@ -164,88 +163,76 @@ class HomeDefaultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomLeft,
-          colors: [
-            Color(0xff1F2722),
-            Color(0xff131312),
-          ],
-        ),
-      ),
-      child: SafeArea(
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            if (state is HomeLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              );
-            } else {
-              return SingleChildScrollView(
-                child: AnimationLimiter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: AnimationConfiguration.toStaggeredList(
-                      duration: const Duration(milliseconds: 500),
-                      childAnimationBuilder: (widget) => SlideAnimation(
-                        horizontalOffset: 100.0,
-                        child: ScaleAnimation(
-                          curve: Curves.ease,
-                          child: widget,
-                        ),
+    return SafeArea(
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is HomeLoadingState) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            );
+          } else {
+            return SingleChildScrollView(
+              child: AnimationLimiter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: AnimationConfiguration.toStaggeredList(
+                    duration: const Duration(milliseconds: 500),
+                    childAnimationBuilder: (widget) => SlideAnimation(
+                      horizontalOffset: 100.0,
+                      child: ScaleAnimation(
+                        curve: Curves.ease,
+                        child: widget,
                       ),
-                      children: [
-                        if (state is HomeLoadingState) ...[
-                          const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ] else ...{
-                          if (state is ResponseSuccessState) ...{
-                            state.TopAnimeBanner.fold(
-                              (l) => const Text("sth went wrong"),
-                              (animeList) =>
-                                  GetTopAnimationForBanner(animeList.data!),
-                            ),
-                          },
-                          const TopAnimeTitle(),
-                          if (state is ResponseSuccessState) ...{
-                            state.TopAnime.fold(
-                              (l) => const Text("sth went wrong"),
-                              (anime) => GetTopAnime(anime.data!),
-                            )
-                          },
-                          const TopCharacters(),
-                          if (state is ResponseSuccessState) ...{
-                            state.TopCharacters.fold(
-                              (l) => const Text("sth went wrong"),
-                              (anime) => CharacterContainerBuilder(anime.data!),
-                            )
-                          },
-                          const NowSeasonsTitle(),
-                          if (state is ResponseSuccessState) ...{
-                            state.SeasonNow.fold(
-                              (l) => const Text("sth went wrong"),
-                              (anime) => GetTopAnime(anime.data!),
-                            )
-                          },
-                          const SizedBox(
-                            height: 20,
-                          )
-                        }
-                      ],
                     ),
+                    children: [
+                      if (state is HomeLoadingState) ...[
+                        const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ] else ...{
+                        if (state is ResponseSuccessState) ...{
+                          state.TopAnimeBanner.fold(
+                            (l) => const Text("sth went wrong"),
+                            (animeList) =>
+                                GetTopAnimationForBanner(animeList.data!),
+                          ),
+                        },
+                        const TopAnimeTitle(),
+                        if (state is ResponseSuccessState) ...{
+                          state.TopAnime.fold(
+                            (l) => const Text("sth went wrong"),
+                            (anime) => GetTopAnime(anime.data!),
+                          )
+                        },
+                        const TopCharacters(),
+                        if (state is ResponseSuccessState) ...{
+                          state.TopCharacters.fold(
+                            (l) => const Text("sth went wrong"),
+                            (anime) => CharacterContainerBuilder(anime.data!),
+                          )
+                        },
+                        const NowSeasonsTitle(),
+                        if (state is ResponseSuccessState) ...{
+                          state.SeasonNow.fold(
+                            (l) => const Text("sth went wrong"),
+                            (anime) => GetTopAnime(anime.data!),
+                          )
+                        },
+                        const SizedBox(
+                          height: 20,
+                        )
+                      }
+                    ],
                   ),
                 ),
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }
