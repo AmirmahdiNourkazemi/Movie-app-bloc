@@ -126,8 +126,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       create: (context) => SearchFilterBloc(),
                       child: FilterScreen('rank'),
                     ),
-                    HomeDefaultScreen(),
-                    HomeDefaultScreen(),
+                    BlocProvider(
+                      create: (context) => SearchFilterBloc(),
+                      child: FilterScreen('score'),
+                    ),
+                    BlocProvider(
+                      create: (context) => SearchFilterBloc(),
+                      child: FilterScreen('popularity'),
+                    ),
                     HomeDefaultScreen(),
                     HomeDefaultScreen(),
                     HomeDefaultScreen(),

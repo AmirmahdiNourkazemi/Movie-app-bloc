@@ -18,7 +18,7 @@ class _FilterScreenState extends State<FilterScreen> {
   @override
   void initState() {
     BlocProvider.of<SearchFilterBloc>(context)
-        .add(SearchFilterString(order: 'rank'));
+        .add(SearchFilterString(order: widget.rank));
   }
 
   @override
@@ -37,43 +37,44 @@ class _FilterScreenState extends State<FilterScreen> {
           ),
         ),
         child: SafeArea(
-            child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: CustomScrollView(
-            slivers: [
-              if (state is SearchLoadingState) ...{
-                const SliverToBoxAdapter(
-                  child: Center(child: CircularProgressIndicator()),
-                )
-              } else ...{
-                if (state is ResponseSearchFilterState) ...{
-                  state.getSearchFilter.fold(
-                    (l) =>
-                        const SliverToBoxAdapter(child: Text('sth wnt wrong')),
-                    (response) => SliverPadding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      sliver: SliverGrid(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return SearchfilterContainerBuilder(
-                                response.data![index]);
-                          },
-                          childCount: response.data!.length,
-                        ),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisSpacing: 2,
-                          childAspectRatio: 0.8,
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: CustomScrollView(
+              slivers: [
+                if (state is SearchLoadingState) ...{
+                  const SliverToBoxAdapter(
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                } else ...{
+                  if (state is ResponseSearchFilterState) ...{
+                    state.getSearchFilter.fold(
+                      (l) => const SliverToBoxAdapter(
+                          child: Text('sth wnt wrong')),
+                      (response) => SliverPadding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        sliver: SliverGrid(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return SearchfilterContainerBuilder(
+                                  response.data![index]);
+                            },
+                            childCount: response.data!.length,
+                          ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            mainAxisSpacing: 2,
+                            childAspectRatio: 0.6,
+                          ),
                         ),
                       ),
-                    ),
-                  )
+                    )
+                  }
                 }
-              }
-            ],
+              ],
+            ),
           ),
-        )),
+        ),
       );
     });
   }
