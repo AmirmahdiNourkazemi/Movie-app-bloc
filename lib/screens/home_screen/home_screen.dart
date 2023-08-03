@@ -15,12 +15,14 @@ import 'package:movie_app/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:movie_app/bloc/search_filter/search_filter_bloc.dart';
 import 'package:movie_app/screens/movie_detail_screen/anime_detail_screen.dart';
 import 'package:movie_app/screens/search_screen/search_screen.dart';
-import 'package:movie_app/screens/tab_bar_screen/rank_screen.dart';
+import 'package:movie_app/screens/tab_bar_screen/order_screen.dart';
+import 'package:movie_app/screens/tab_bar_screen/rating_screen.dart';
 import '../../data/model/getTop/Anime/Data.dart';
 
 import '../../widgets/anime_container.dart';
 import '../../widgets/cached_image.dart';
 import '../../widgets/character_container_builder.dart';
+import '../tab_bar_screen/type_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         child: DefaultTabController(
-          length: 7,
+          length: 6,
           child: Column(
             children: <Widget>[
               ButtonsTabBar(
@@ -82,15 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Tab(
                     icon: Icon(
-                      Icons.trending_up,
+                      Icons.tv,
                     ),
-                    text: 'Rank',
+                    text: 'TV',
                   ),
                   Tab(
                     icon: Icon(
-                      Icons.score,
+                      Icons.trending_up,
                     ),
-                    text: 'Score',
+                    text: 'Rank',
                   ),
                   Tab(
                     icon: Icon(
@@ -106,12 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Tab(
                     icon: Icon(
-                      Icons.man,
-                    ),
-                    text: 'Teens 13 or older',
-                  ),
-                  Tab(
-                    icon: Icon(
                       Icons.six_k_rounded,
                     ),
                     text: '17+ (violence & profanity)',
@@ -124,19 +120,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     HomeDefaultScreen(),
                     BlocProvider(
                       create: (context) => SearchFilterBloc(),
-                      child: FilterScreen('rank'),
+                      child: TvFilterScreen('tv'),
                     ),
                     BlocProvider(
                       create: (context) => SearchFilterBloc(),
-                      child: FilterScreen('score'),
+                      child: OrderFilterScreen('rank'),
                     ),
                     BlocProvider(
                       create: (context) => SearchFilterBloc(),
-                      child: FilterScreen('popularity'),
+                      child: OrderFilterScreen('popularity'),
                     ),
-                    HomeDefaultScreen(),
-                    HomeDefaultScreen(),
-                    HomeDefaultScreen(),
+                    BlocProvider(
+                      create: (context) => SearchFilterBloc(),
+                      child: RatingFilterScreen('pg'),
+                    ),
+                    BlocProvider(
+                      create: (context) => SearchFilterBloc(),
+                      child: RatingFilterScreen('r17'),
+                    ),
                   ],
                 ),
               ),

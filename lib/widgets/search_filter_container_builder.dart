@@ -139,7 +139,7 @@ class _SearchfilterContainerBuilderState
                 ),
               ),
               SizedBox(
-                height: 8,
+                height: 10,
               ),
               Text(
                 widget._listData.title!,

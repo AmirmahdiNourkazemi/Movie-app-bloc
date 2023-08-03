@@ -19,7 +19,7 @@ class SearchFilterBloc extends Bloc<SearchFilterEvent, SearchFilterState> {
     on<SearchFilterString>(
       (event, emit) async {
         var getString = await _filterRepository.getAnimeByFilter(
-            event.q, event.order, event.rating);
+            event.q, event.order, event.rating, event.type);
         emit(ResponseSearchFilterState(getString));
       },
     );

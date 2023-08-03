@@ -7,14 +7,14 @@ import 'package:movie_app/widgets/anime_container.dart';
 
 import '../../widgets/search_filter_container_builder.dart';
 
-class FilterScreen extends StatefulWidget {
-  FilterScreen(this.rank, {super.key});
+class OrderFilterScreen extends StatefulWidget {
+  OrderFilterScreen(this.rank, {super.key});
   String rank;
   @override
-  State<FilterScreen> createState() => _FilterScreenState();
+  State<OrderFilterScreen> createState() => _OrderFilterScreenState();
 }
 
-class _FilterScreenState extends State<FilterScreen> {
+class _OrderFilterScreenState extends State<OrderFilterScreen> {
   @override
   void initState() {
     BlocProvider.of<SearchFilterBloc>(context)

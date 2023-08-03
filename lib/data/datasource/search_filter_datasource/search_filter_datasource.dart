@@ -6,10 +6,7 @@ import '../../../utils/api_exeption.dart';
 
 abstract class ISearchFilterDatasource {
   Future<GetAnimeSearch> getAnimeByFilter(
-    String q,
-    String order,
-    String rating,
-  );
+      String q, String order, String rating, String type);
 }
 
 class SearchFilterDatasource extends ISearchFilterDatasource {
@@ -17,7 +14,7 @@ class SearchFilterDatasource extends ISearchFilterDatasource {
   final Dio _dio = locator.get();
 
   @override
-  Future<GetAnimeSearch> getAnimeByFilter(q, order, rating) async {
+  Future<GetAnimeSearch> getAnimeByFilter(q, order, rating, type) async {
     // Response response = await _dio.get('anime',
     //     queryParameters: {'q': q, 'order_by': order, 'rating': rating});
     // if (response.statusCode == 200) {
@@ -35,6 +32,7 @@ class SearchFilterDatasource extends ISearchFilterDatasource {
           'q': q,
           'order_by': order,
           'rating': rating,
+          'type': type,
           'sort': 'desc'
         },
       );
