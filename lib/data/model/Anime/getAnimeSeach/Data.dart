@@ -152,7 +152,7 @@ class Data {
   Aired? aired;
   String? duration;
   String? rating;
-  int? score;
+  double? score;
   int? scoredBy;
   int? rank;
   int? popularity;

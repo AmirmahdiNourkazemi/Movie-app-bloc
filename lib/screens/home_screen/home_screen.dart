@@ -12,7 +12,10 @@ import 'package:movie_app/bloc/home/home_bloc.dart';
 import 'package:movie_app/bloc/home/home_event.dart';
 import 'package:movie_app/bloc/home/home_state.dart';
 import 'package:movie_app/bloc/movie_detail/movie_detail_bloc.dart';
+import 'package:movie_app/bloc/search_filter/search_filter_bloc.dart';
 import 'package:movie_app/screens/movie_detail_screen/anime_detail_screen.dart';
+import 'package:movie_app/screens/search_screen/search_screen.dart';
+import 'package:movie_app/screens/tab_bar_screen/rank_screen.dart';
 import '../../data/model/getTop/Anime/Data.dart';
 
 import '../../widgets/anime_container.dart';
@@ -115,11 +118,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                const Expanded(
+                Expanded(
                   child: TabBarView(
                     children: [
                       HomeDefaultScreen(),
-                      HomeDefaultScreen(),
+                      BlocProvider(
+                        create: (context) => SearchFilterBloc(),
+                        child: FilterScreen('rank'),
+                      ),
                       HomeDefaultScreen(),
                       HomeDefaultScreen(),
                       HomeDefaultScreen(),

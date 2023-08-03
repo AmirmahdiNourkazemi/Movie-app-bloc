@@ -348,33 +348,33 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
 
                           if (state is MovieDetailResponseSuccessState) ...{
                             state.getAnimeCharactesById.fold(
-                                (l) => const Text("sth went wrong"),
-                                (anime) => Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8, horizontal: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Characters',
-                                                style: GoogleFonts.raleway(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
+                              (l) => const Text("sth went wrong"),
+                              (anime) => Column(
+                                children: [
+                                  if (anime.data!.isNotEmpty) ...{
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Characters',
+                                            style: GoogleFonts.raleway(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
-                                        ),
-                                        if (anime.data!.isNotEmpty) ...{
-                                          AnimeCharacterContainerBuilder(
-                                              anime.data!)
-                                        }
-                                      ],
-                                    ))
+                                        ],
+                                      ),
+                                    ),
+                                    AnimeCharacterContainerBuilder(anime.data!)
+                                  }
+                                ],
+                              ),
+                            )
                           },
 
                           if (state is MovieDetailResponseSuccessState) ...{
@@ -413,25 +413,27 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                               (l) => const Text("sth went wrong"),
                               (recomm) => Column(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Recommended Anime',
-                                          style: GoogleFonts.raleway(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
+                                  if (recomm.data!.isNotEmpty) ...{
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Recommended Anime',
+                                            style: GoogleFonts.raleway(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  GetRecomContainerDetail(recomm.data!)
+                                    GetRecomContainerDetail(recomm.data!)
+                                  }
                                 ],
                               ),
                             )

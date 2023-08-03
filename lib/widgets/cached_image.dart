@@ -16,7 +16,7 @@ class CachedImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(radious)),
       child: CachedNetworkImage(
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
         imageUrl: imageUrl ?? '',
         errorWidget: (context, url, error) {
           return Container(
