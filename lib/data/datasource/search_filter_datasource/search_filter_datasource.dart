@@ -6,7 +6,10 @@ import '../../../utils/api_exeption.dart';
 
 abstract class ISearchFilterDatasource {
   Future<GetAnimeSearch> getAnimeByFilter(
-      {String q = "", String order = "title", String rating = "G"});
+    String q,
+    String order,
+    String rating,
+  );
 }
 
 class SearchFilterDatasource extends ISearchFilterDatasource {
@@ -14,8 +17,7 @@ class SearchFilterDatasource extends ISearchFilterDatasource {
   final Dio _dio = locator.get();
 
   @override
-  Future<GetAnimeSearch> getAnimeByFilter(
-      {String q = '', String order = "title", String rating = "G"}) async {
+  Future<GetAnimeSearch> getAnimeByFilter(q, order, rating) async {
     // Response response = await _dio.get('anime',
     //     queryParameters: {'q': q, 'order_by': order, 'rating': rating});
     // if (response.statusCode == 200) {
@@ -25,16 +27,16 @@ class SearchFilterDatasource extends ISearchFilterDatasource {
     // }
 
     try {
-      var defaultQueryParameter = {
-        'q': '',
-        'order': 'title',
-        'rating': 'G',
-        'sort': 'asc'
-      };
-      _dio.options.queryParameters = defaultQueryParameter;
+      // var defaultQueryParameter = {'sort': 'desc'};
+      // _dio.options.queryParameters = defaultQueryParameter;
       final response = await _dio.get(
         'anime',
-        queryParameters: {'q': q, 'order_by': order, 'rating': rating},
+        queryParameters: {
+          'q': q,
+          'order_by': order,
+          'rating': rating,
+          'sort': 'desc'
+        },
       );
 
       return GetAnimeSearch.fromJson(response.data);

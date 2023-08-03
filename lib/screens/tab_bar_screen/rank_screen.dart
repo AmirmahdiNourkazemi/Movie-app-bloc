@@ -18,7 +18,7 @@ class _FilterScreenState extends State<FilterScreen> {
   @override
   void initState() {
     BlocProvider.of<SearchFilterBloc>(context)
-        .add(SearchFilterOrderBy("popularity"));
+        .add(SearchFilterString(order: 'rank'));
   }
 
   @override

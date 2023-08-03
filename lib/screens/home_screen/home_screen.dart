@@ -37,107 +37,108 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomLeft,
-              colors: [
-                Color(0xff1F2722),
-                Color(0xff131312),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color(0xff1F2722),
+              Color(0xff131312),
+            ],
           ),
-          child: DefaultTabController(
-            length: 7,
-            child: Column(
-              children: <Widget>[
-                ButtonsTabBar(
-                  elevation: 3,
-                  height: 38,
-                  center: true,
-                  // Customize the appearance and behavior of the tab bar
-                  backgroundColor: const Color(0xff9496c1),
-                  borderWidth: 1,
-                  borderColor: const Color(0xff9496c1),
-                  labelStyle: GoogleFonts.raleway(
-                    color: Colors.white,
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  unselectedLabelStyle: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+        ),
+        child: DefaultTabController(
+          length: 7,
+          child: Column(
+            children: <Widget>[
+              ButtonsTabBar(
+                elevation: 3,
+                height: 38,
+                center: true,
+                // Customize the appearance and behavior of the tab bar
+                backgroundColor: const Color(0xff9496c1),
+                borderWidth: 1,
+                borderColor: const Color(0xff9496c1),
+                labelStyle: GoogleFonts.raleway(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
+                unselectedLabelStyle: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
 
-                  // Add your tabs here
-                  tabs: const [
-                    Tab(
-                      icon: Icon(
-                        Icons.home_max_rounded,
-                      ),
-                      text: 'Home',
+                // Add your tabs here
+                tabs: const [
+                  Tab(
+                    icon: Icon(
+                      Icons.home_max_rounded,
                     ),
-                    Tab(
-                      icon: Icon(
-                        Icons.trending_up,
-                      ),
-                      text: 'Rank',
+                    text: 'Home',
+                  ),
+                  Tab(
+                    icon: Icon(
+                      Icons.trending_up,
                     ),
-                    Tab(
-                      icon: Icon(
-                        Icons.score,
-                      ),
-                      text: 'Score',
+                    text: 'Rank',
+                  ),
+                  Tab(
+                    icon: Icon(
+                      Icons.score,
                     ),
-                    Tab(
-                      icon: Icon(
-                        Icons.local_fire_department,
-                      ),
-                      text: 'popularity',
+                    text: 'Score',
+                  ),
+                  Tab(
+                    icon: Icon(
+                      Icons.local_fire_department,
                     ),
-                    Tab(
-                      icon: Icon(
-                        Icons.child_care,
-                      ),
-                      text: 'Children',
+                    text: 'popularity',
+                  ),
+                  Tab(
+                    icon: Icon(
+                      Icons.child_care,
                     ),
-                    Tab(
-                      icon: Icon(
-                        Icons.man,
-                      ),
-                      text: 'Teens 13 or older',
+                    text: 'Children',
+                  ),
+                  Tab(
+                    icon: Icon(
+                      Icons.man,
                     ),
-                    Tab(
-                      icon: Icon(
-                        Icons.six_k_rounded,
-                      ),
-                      text: '17+ (violence & profanity)',
+                    text: 'Teens 13 or older',
+                  ),
+                  Tab(
+                    icon: Icon(
+                      Icons.six_k_rounded,
                     ),
+                    text: '17+ (violence & profanity)',
+                  ),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    HomeDefaultScreen(),
+                    BlocProvider(
+                      create: (context) => SearchFilterBloc(),
+                      child: FilterScreen('rank'),
+                    ),
+                    HomeDefaultScreen(),
+                    HomeDefaultScreen(),
+                    HomeDefaultScreen(),
+                    HomeDefaultScreen(),
+                    HomeDefaultScreen(),
                   ],
                 ),
-                Expanded(
-                  child: TabBarView(
-                    children: [
-                      HomeDefaultScreen(),
-                      BlocProvider(
-                        create: (context) => SearchFilterBloc(),
-                        child: FilterScreen('rank'),
-                      ),
-                      HomeDefaultScreen(),
-                      HomeDefaultScreen(),
-                      HomeDefaultScreen(),
-                      HomeDefaultScreen(),
-                      HomeDefaultScreen(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -160,79 +161,75 @@ class HomeDefaultScreen extends StatelessWidget {
         ),
       ),
       child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              if (state is HomeLoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                );
-              } else {
-                return SingleChildScrollView(
-                  child: AnimationLimiter(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: AnimationConfiguration.toStaggeredList(
-                        duration: const Duration(milliseconds: 500),
-                        childAnimationBuilder: (widget) => SlideAnimation(
-                          horizontalOffset: 100.0,
-                          child: ScaleAnimation(
-                            curve: Curves.ease,
-                            child: widget,
-                          ),
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            if (state is HomeLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              );
+            } else {
+              return SingleChildScrollView(
+                child: AnimationLimiter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 500),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        horizontalOffset: 100.0,
+                        child: ScaleAnimation(
+                          curve: Curves.ease,
+                          child: widget,
                         ),
-                        children: [
-                          if (state is HomeLoadingState) ...[
-                            const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ] else ...{
-                            if (state is ResponseSuccessState) ...{
-                              state.TopAnimeBanner.fold(
-                                (l) => const Text("sth went wrong"),
-                                (animeList) =>
-                                    GetTopAnimationForBanner(animeList.data!),
-                              ),
-                            },
-                            const TopAnimeTitle(),
-                            if (state is ResponseSuccessState) ...{
-                              state.TopAnime.fold(
-                                (l) => const Text("sth went wrong"),
-                                (anime) => GetTopAnime(anime.data!),
-                              )
-                            },
-                            const TopCharacters(),
-                            if (state is ResponseSuccessState) ...{
-                              state.TopCharacters.fold(
-                                (l) => const Text("sth went wrong"),
-                                (anime) =>
-                                    CharacterContainerBuilder(anime.data!),
-                              )
-                            },
-                            const NowSeasonsTitle(),
-                            if (state is ResponseSuccessState) ...{
-                              state.SeasonNow.fold(
-                                (l) => const Text("sth went wrong"),
-                                (anime) => GetTopAnime(anime.data!),
-                              )
-                            },
-                            const SizedBox(
-                              height: 20,
-                            )
-                          }
-                        ],
                       ),
+                      children: [
+                        if (state is HomeLoadingState) ...[
+                          const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ] else ...{
+                          if (state is ResponseSuccessState) ...{
+                            state.TopAnimeBanner.fold(
+                              (l) => const Text("sth went wrong"),
+                              (animeList) =>
+                                  GetTopAnimationForBanner(animeList.data!),
+                            ),
+                          },
+                          const TopAnimeTitle(),
+                          if (state is ResponseSuccessState) ...{
+                            state.TopAnime.fold(
+                              (l) => const Text("sth went wrong"),
+                              (anime) => GetTopAnime(anime.data!),
+                            )
+                          },
+                          const TopCharacters(),
+                          if (state is ResponseSuccessState) ...{
+                            state.TopCharacters.fold(
+                              (l) => const Text("sth went wrong"),
+                              (anime) => CharacterContainerBuilder(anime.data!),
+                            )
+                          },
+                          const NowSeasonsTitle(),
+                          if (state is ResponseSuccessState) ...{
+                            state.SeasonNow.fold(
+                              (l) => const Text("sth went wrong"),
+                              (anime) => GetTopAnime(anime.data!),
+                            )
+                          },
+                          const SizedBox(
+                            height: 20,
+                          )
+                        }
+                      ],
                     ),
                   ),
-                );
-              }
-            },
-          ),
+                ),
+              );
+            }
+          },
         ),
       ),
     );

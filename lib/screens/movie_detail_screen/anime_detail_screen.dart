@@ -191,7 +191,7 @@ class _AnimeDetailScreenState extends State<AnimeDetailScreen> {
                                               Chip(
                                                 avatar: const Icon(Icons.movie),
                                                 label: Text(
-                                                  "episode:${anime.data!.episodes!.toString()}",
+                                                  "episode:${anime.data!.episodes}",
                                                   style: GoogleFonts.raleway(
                                                     color: Colors.black,
                                                     fontSize: 12,

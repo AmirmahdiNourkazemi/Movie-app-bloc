@@ -7,16 +7,19 @@ import '../../../utils/api_exeption.dart';
 
 abstract class ISearchFilterRepository {
   Future<Either<String, GetAnimeSearch>> getAnimeByFilter(
-      {String q = "", String order = "title", String rating = "g"});
+    String q,
+    String order,
+    String rating,
+  );
 }
 
 class SearchFilterRemote extends ISearchFilterRepository {
   @override
   final ISearchFilterDatasource _filterDatasource = locator.get();
   Future<Either<String, GetAnimeSearch>> getAnimeByFilter(
-      {String q = "", String order = "title", String rating = "g"}) async {
+      String q, String order, String rating) async {
     try {
-      var response = await _filterDatasource.getAnimeByFilter();
+      var response = await _filterDatasource.getAnimeByFilter(q, order, rating);
       return right(response);
     } on ApiExeption catch (e) {
       return left(e.message ?? 'خطا محتوای متنی ندارد');

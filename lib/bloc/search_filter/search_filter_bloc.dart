@@ -18,22 +18,9 @@ class SearchFilterBloc extends Bloc<SearchFilterEvent, SearchFilterState> {
     );
     on<SearchFilterString>(
       (event, emit) async {
-        var getString = await _filterRepository.getAnimeByFilter(q: event.q);
+        var getString = await _filterRepository.getAnimeByFilter(
+            event.q, event.order, event.rating);
         emit(ResponseSearchFilterState(getString));
-      },
-    );
-    on<SearchFilterOrderBy>(
-      (event, emit) async {
-        var getOrder =
-            await _filterRepository.getAnimeByFilter(order: event.order);
-        emit(ResponseSearchFilterState(getOrder));
-      },
-    );
-    on<SearchFilterRating>(
-      (event, emit) async {
-        var getRatng =
-            await _filterRepository.getAnimeByFilter(rating: event.rating);
-        emit(ResponseSearchFilterState(getRatng));
       },
     );
   }
