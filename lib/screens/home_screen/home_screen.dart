@@ -39,110 +39,118 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomLeft,
-            colors: [
-              Color(0xff1F2722),
-              Color(0xff131312),
-            ],
-          ),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomLeft,
+          colors: [
+            Color(0xff1F2722),
+            Color(0xff131312),
+          ],
         ),
-        child: DefaultTabController(
-          length: 6,
-          child: Column(
-            children: <Widget>[
-              ButtonsTabBar(
-                elevation: 3,
-                height: 38,
-                center: true,
-                // Customize the appearance and behavior of the tab bar
-                backgroundColor: const Color(0xff9496c1),
-                borderWidth: 1,
-                borderColor: const Color(0xff9496c1),
-                labelStyle: GoogleFonts.raleway(
-                  color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                ),
-                unselectedLabelStyle: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+      ),
+      child: DefaultTabController(
+        length: 7,
+        child: Column(
+          children: <Widget>[
+            ButtonsTabBar(
+              elevation: 3,
+              height: 40,
+              buttonMargin: const EdgeInsets.all(3),
+              center: true,
+              // Customize the appearance and behavior of the tab bar
+              backgroundColor: const Color(0xff9496c1),
+              borderWidth: 1,
+              borderColor: const Color(0xff9496c1),
+              labelStyle: GoogleFonts.raleway(
+                color: Colors.white,
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+              ),
+              unselectedLabelStyle: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
 
-                // Add your tabs here
-                tabs: const [
-                  Tab(
-                    icon: Icon(
-                      Icons.home_max_rounded,
-                    ),
-                    text: 'Home',
+              // Add your tabs here
+              tabs: const [
+                Tab(
+                  icon: Icon(
+                    Icons.home_max_rounded,
                   ),
-                  Tab(
-                    icon: Icon(
-                      Icons.tv,
-                    ),
-                    text: 'TV',
+                  text: 'Home',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.tv,
                   ),
-                  Tab(
-                    icon: Icon(
-                      Icons.trending_up,
-                    ),
-                    text: 'Rank',
+                  text: 'TV',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.movie,
                   ),
-                  Tab(
-                    icon: Icon(
-                      Icons.local_fire_department,
-                    ),
-                    text: 'popularity',
+                  text: 'Movie',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.trending_up,
                   ),
-                  Tab(
-                    icon: Icon(
-                      Icons.child_care,
-                    ),
-                    text: 'Children',
+                  text: 'Rank',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.local_fire_department,
                   ),
-                  Tab(
-                    icon: Icon(
-                      Icons.six_k_rounded,
-                    ),
-                    text: '17+ (violence & profanity)',
+                  text: 'popularity',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.child_care,
+                  ),
+                  text: 'Children',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.six_k_rounded,
+                  ),
+                  text: '17+ (violence & profanity)',
+                ),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  const HomeDefaultScreen(),
+                  BlocProvider(
+                    create: (context) => SearchFilterBloc(),
+                    child: TvFilterScreen('tv'),
+                  ),
+                  BlocProvider(
+                    create: (context) => SearchFilterBloc(),
+                    child: TvFilterScreen('movie'),
+                  ),
+                  BlocProvider(
+                    create: (context) => SearchFilterBloc(),
+                    child: OrderFilterScreen('rank'),
+                  ),
+                  BlocProvider(
+                    create: (context) => SearchFilterBloc(),
+                    child: OrderFilterScreen('popularity'),
+                  ),
+                  BlocProvider(
+                    create: (context) => SearchFilterBloc(),
+                    child: RatingFilterScreen('pg'),
+                  ),
+                  BlocProvider(
+                    create: (context) => SearchFilterBloc(),
+                    child: RatingFilterScreen('r17'),
                   ),
                 ],
               ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    HomeDefaultScreen(),
-                    BlocProvider(
-                      create: (context) => SearchFilterBloc(),
-                      child: TvFilterScreen('tv'),
-                    ),
-                    BlocProvider(
-                      create: (context) => SearchFilterBloc(),
-                      child: OrderFilterScreen('rank'),
-                    ),
-                    BlocProvider(
-                      create: (context) => SearchFilterBloc(),
-                      child: OrderFilterScreen('popularity'),
-                    ),
-                    BlocProvider(
-                      create: (context) => SearchFilterBloc(),
-                      child: RatingFilterScreen('pg'),
-                    ),
-                    BlocProvider(
-                      create: (context) => SearchFilterBloc(),
-                      child: RatingFilterScreen('r17'),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
