@@ -10,16 +10,16 @@ import '../../di/di.dart';
 
 class SearchFilterBloc extends Bloc<SearchFilterEvent, SearchFilterState> {
   final ISearchFilterRepository _filterRepository = locator.get();
-  SearchFilterBloc() : super(SearchInitState()) {
+  SearchFilterBloc() : super(SearchFilterInitState()) {
     on<SearchFilterInitEvent>(
       (event, emit) {
-        emit(SearchLoadingState());
+        emit(SearchFilterLoadingState());
       },
     );
     on<SearchFilterString>(
       (event, emit) async {
         var getString = await _filterRepository.getAnimeByFilter(
-            event.q, event.order, event.rating, event.type);
+            event.q, event.order, event.rating,event.type);
         emit(ResponseSearchFilterState(getString));
       },
     );

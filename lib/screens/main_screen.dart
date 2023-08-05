@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/bloc/home/home_bloc.dart';
 import 'package:movie_app/bloc/magazine/magazine_bloc.dart';
 import 'package:movie_app/bloc/search/search_bloc.dart';
+import 'package:movie_app/bloc/search_filter/search_filter_bloc.dart';
 import 'package:movie_app/screens/home_screen/home_screen.dart';
 import 'package:movie_app/screens/search_screen/search_screen.dart';
 import 'package:movie_app/screens/watch_list/watch_list_screen.dart';

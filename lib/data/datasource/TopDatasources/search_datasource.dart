@@ -12,9 +12,7 @@ class SearchDatasouce extends IsearchDatasource {
   @override
   final Dio _dio = locator.get();
   Future<GetAnimeSearch> getAnimeSearch(String word) async {
-    Response response = await _dio.get(
-      'anime?q=$word',
-    );
+    Response response = await _dio.get('anime', queryParameters: {'q': word});
     if (response.statusCode == 200) {
       return GetAnimeSearch.fromJson(response.data);
     } else {

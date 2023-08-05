@@ -3,9 +3,11 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewContainer extends StatefulWidget {
   final url;
-  WebViewContainer(this.url);
+  // ignore: use_key_in_widget_constructors
+  const WebViewContainer(this.url);
   @override
-  createState() => _WebViewContainerState(this.url);
+  // ignore: no_logic_in_create_state
+  createState() => _WebViewContainerState(url);
 }
 
 class _WebViewContainerState extends State<WebViewContainer> {

@@ -41,7 +41,7 @@ class _TvFilterScreenState extends State<TvFilterScreen> {
             backgroundColor: Colors.transparent,
             body: CustomScrollView(
               slivers: [
-                if (state is SearchLoadingState) ...{
+                if (state is SearchFilterLoadingState) ...{
                   const SliverToBoxAdapter(
                     child: Center(child: CircularProgressIndicator()),
                   )
